@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [latest]
   pull_request:
-    branches: [main]
+    branches: [latest]
 
 # Automatically cancel in-progress actions on the same branch
 concurrency:
