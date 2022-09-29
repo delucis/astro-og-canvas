@@ -1,0 +1,22 @@
+{
+  "name": "@root/astro-og-canvas",
+  "version": "0.0.1",
+  "private": true,
+  "workspaces": [
+    "demo",
+    "packages/**/*"
+  ],
+  "scripts": {
+    "build:demo": "cd demo && npm run build && cd ../",
+    "prepublish": "npm run build --workspace=astro-og-canvas",
+    "test": "npm run build:demo && tsm node_modules/uvu/bin.js test"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.4.6",
+    "@changesets/cli": "^2.24.4",
+    "astro": "^1.3.0",
+    "tsm": "^2.2.2",
+    "typescript": "^4.8.3",
+    "uvu": "^0.5.6"
+  }
+}

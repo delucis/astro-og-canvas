@@ -1,0 +1,43 @@
+{
+  "name": "astro-og-canvas",
+  "description": "Generate OpenGraph images for your Astro site",
+  "version": "0.0.1",
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "author": "Chris Swithinbank <swithinbank@gmail.com> (http://chrisswithinbank.net/)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/delucis/astro-og-canvas.git",
+    "directory": "packages/astro-og-canvas"
+  },
+  "bugs": "https://github.com/delucis/astro-og-canvas/issues",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "npm run build"
+  },
+  "keywords": [
+    "withastro",
+    "astro-integration",
+    "open-graph",
+    "seo",
+    "images"
+  ],
+  "devDependencies": {
+    "@types/node": "^16.11.62",
+    "astro": "^1.3.0",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "canvaskit-wasm": "^0.37.0"
+  },
+  "peerDependencies": {
+    "astro": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
