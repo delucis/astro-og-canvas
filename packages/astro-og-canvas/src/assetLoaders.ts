@@ -7,7 +7,7 @@ const debug = (...args: any[]) => console.debug('[astro-open-graph]', ...args);
 const error = (...args: any[]) => console.error('[astro-open-graph]', ...args);
 
 /** CanvasKit singleton. */
-export const CanvasKit = await init({
+export const CanvasKitPromise = init({
   // TODO: Figure how to reliably resolve this without depending on Node.
   locateFile: (file) => resolve(`canvaskit-wasm/bin/${file}`),
 });
@@ -42,7 +42,7 @@ export const loadFonts = async (fontUrls: string[]): Promise<ArrayBuffer[]> => {
     resolve();
   });
   await fonts.loading;
-  if (hasNew) logFontsLoaded(fontData);
+  if (hasNew) await logFontsLoaded(fontData);
   return fontData;
 };
 
@@ -50,7 +50,8 @@ export const loadFonts = async (fontUrls: string[]): Promise<ArrayBuffer[]> => {
  * Log to the terminal which font families have been loaded.
  * Mostly useful so users can see the name of families as parsed by CanvasKit.
  */
-function logFontsLoaded(fonts: ArrayBuffer[]) {
+async function logFontsLoaded(fonts: ArrayBuffer[]) {
+  const CanvasKit = await CanvasKitPromise;
   const fontMgr = CanvasKit.FontMgr.FromData(...fonts);
   if (fontMgr) {
     const fontCount = fontMgr.countFamilies();

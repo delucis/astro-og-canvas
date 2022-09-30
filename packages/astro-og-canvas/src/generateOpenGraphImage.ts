@@ -1,4 +1,4 @@
-import { CanvasKit, loadFonts, loadImage } from './assetLoaders';
+import { CanvasKitPromise, loadFonts, loadImage } from './assetLoaders';
 import type {
   FontConfig,
   IllogicalSide,
@@ -7,14 +7,6 @@ import type {
   RGBColor,
   XYWH,
 } from './types';
-
-const textStyle = (fontConfig: Required<FontConfig>) => ({
-  color: CanvasKit.Color(...fontConfig.color),
-  fontFamilies: fontConfig.families,
-  fontSize: fontConfig.size,
-  fontStyle: { weight: CanvasKit.FontWeight[fontConfig.weight] },
-  heightMultiplier: fontConfig.lineHeight,
-});
 
 export async function generateOpenGraphImage({
   title,
@@ -59,6 +51,16 @@ export async function generateOpenGraphImage({
   const marginInlineStart = padding + (border.side === 'inline-start' ? border.width : 0);
   const marginBlockStart = padding + (border.side === 'block-start' ? border.width : 0);
   const [width, height] = [1200, 630];
+
+  const CanvasKit = await CanvasKitPromise;
+
+  const textStyle = (fontConfig: Required<FontConfig>) => ({
+    color: CanvasKit.Color(...fontConfig.color),
+    fontFamilies: fontConfig.families,
+    fontSize: fontConfig.size,
+    fontStyle: { weight: CanvasKit.FontWeight[fontConfig.weight] },
+    heightMultiplier: fontConfig.lineHeight,
+  });
 
   // Set up.
   const surface = CanvasKit.MakeSurface(width, height)!;
