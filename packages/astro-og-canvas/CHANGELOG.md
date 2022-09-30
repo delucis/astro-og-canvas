@@ -1,5 +1,13 @@
 # astro-og-canvas
 
+## 0.1.2
+
+### Patch Changes
+
+- 641bbe9: Fix debug logging prefix
+- 479a011: Ship compiled JavaScript output instead of uncompiled TypeScript.
+- 7fd6d5b: Support async `getImageOptions`
+
 ## 0.1.1
 
 ### Patch Changes
