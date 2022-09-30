@@ -1,0 +1,38 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { pages } from './_pages';
+---
+
+<Layout>
+  <main>
+    {
+      Object.entries(pages).map(([key, { title, description }]) => (
+        <article>
+          <header>
+            <h2>{title}</h2>
+            <p>{description}</p>
+          </header>
+          <img src={'/font-test/' + key.replace('.md', '.png')} width="400" />
+        </article>
+      ))
+    }
+  </main>
+</Layout>
+
+<style>
+  main {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 1rem;
+  }
+  article {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+  header > * {
+    margin: 0;
+  }
+</style>
