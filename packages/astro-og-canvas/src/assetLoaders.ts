@@ -52,16 +52,15 @@ class FontManager {
     let hasNew = false;
     this.#loading = new Promise<void>(async (resolve) => {
       for (const url of fontUrls) {
-        if (!this.#cache.has(url)) {
-          hasNew = true;
-          debug('Downloading', url);
-          const response = await fetch(url);
-          if (response.ok) {
-            this.#cache.set(url, await response.arrayBuffer());
-          } else {
-            this.#cache.set(url, undefined);
-            error(response.status, response.statusText, '—', url);
-          }
+        if (this.#cache.has(url)) continue;
+        hasNew = true;
+        debug('Downloading', url);
+        const response = await fetch(url);
+        if (response.ok) {
+          this.#cache.set(url, await response.arrayBuffer());
+        } else {
+          this.#cache.set(url, undefined);
+          error(response.status, response.statusText, '—', url);
         }
       }
       resolve();
