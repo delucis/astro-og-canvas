@@ -66,7 +66,7 @@ class FontManager {
       resolve();
     });
     await this.#loading;
-    if (hasNew) this.#updateManager();
+    if (hasNew) await this.#updateManager();
     return this.#manager!;
   }
 }
