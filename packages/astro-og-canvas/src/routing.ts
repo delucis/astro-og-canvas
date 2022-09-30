@@ -28,7 +28,9 @@ function createOGImageEndpoint({ getSlug = pathToSlug, ...opts }: OGImageRouteCo
     );
     if (!pageEntry) return new Response('Page not found', { status: 404 });
     return {
-      body: (await generateOpenGraphImage(opts.getImageOptions(...pageEntry))) as unknown as string,
+      body: (await generateOpenGraphImage(
+        await opts.getImageOptions(...pageEntry)
+      )) as unknown as string,
     };
   };
 }
@@ -47,5 +49,5 @@ interface OGImageRouteConfig {
   pages: { [path: string]: any };
   param: string;
   getSlug?: (path: string, page: any) => string;
-  getImageOptions: (path: string, page: any) => OGImageOptions;
+  getImageOptions: (path: string, page: any) => OGImageOptions | Promise<OGImageOptions>;
 }
