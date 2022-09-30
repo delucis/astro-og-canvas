@@ -4,8 +4,8 @@ import fs from 'fs/promises';
 import { createRequire } from 'module';
 const { resolve } = createRequire(import.meta.url);
 
-const debug = (...args: any[]) => console.debug('[astro-open-graph]', ...args);
-const error = (...args: any[]) => console.error('[astro-open-graph]', ...args);
+const debug = (...args: any[]) => console.debug('[astro-og-canvas]', ...args);
+const error = (...args: any[]) => console.error('[astro-og-canvas]', ...args);
 
 /** CanvasKit singleton. */
 export const CanvasKitPromise = init({
