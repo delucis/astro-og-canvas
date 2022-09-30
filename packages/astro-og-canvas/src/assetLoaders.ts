@@ -49,7 +49,6 @@ class FontManager {
    */
   async get(fontUrls: string[]): Promise<FontMgr> {
     await this.#loading;
-    const fontData: ArrayBuffer[] = [];
     let hasNew = false;
     this.#loading = new Promise<void>(async (resolve) => {
       for (const url of fontUrls) {
@@ -64,8 +63,6 @@ class FontManager {
             error(response.status, response.statusText, '—', url);
           }
         }
-        const font = this.#cache.get(url);
-        if (font) fontData.push(font);
       }
       resolve();
     });
