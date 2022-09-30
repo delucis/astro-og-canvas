@@ -13,8 +13,11 @@
   },
   "bugs": "https://github.com/delucis/astro-og-canvas/issues",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./dist/index.js"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "prepublish": "npm run build"

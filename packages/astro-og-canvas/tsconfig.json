@@ -2,6 +2,9 @@
   "extends": "astro/tsconfigs/strictest",
   "include": ["src"],
   "compilerOptions": {
+    "declaration": true,
+    "noEmit": false,
+    "outDir": "./dist",
     "skipLibCheck": true
   }
 }
