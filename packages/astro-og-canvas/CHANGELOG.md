@@ -1,5 +1,13 @@
 # astro-og-canvas
 
+## 0.1.3
+
+### Patch Changes
+
+- 819977a: Support HTML entities in title & description
+- be5c57f: Remove unused array in font manager
+- cd14cbe: Fix bug causing font manager to return previous manager instance
+
 ## 0.1.2
 
 ### Patch Changes
