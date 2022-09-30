@@ -33,4 +33,8 @@ export const pages: Record<string, { title: string; description: string; dir?: '
     title: 'Начало Работы',
     description: 'Основное введение в Astro.',
   },
+  'de-config-reference.md': {
+    title: 'Konfigurations&shy;referenz',
+    description: '',
+  },
 };

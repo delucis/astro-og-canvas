@@ -1,3 +1,5 @@
+import { decodeHTMLStrict } from 'entities';
+
 import { CanvasKitPromise, fontManager, loadImage } from './assetLoaders';
 import type {
   FontConfig,
@@ -144,7 +146,7 @@ export async function generateOpenGraphImage({
       textDirection: isRtl ? CanvasKit.TextDirection.RTL : CanvasKit.TextDirection.LTR,
     });
     const paragraphBuilder = CanvasKit.ParagraphBuilder.Make(paragraphStyle, fontMgr);
-    paragraphBuilder.addText(title);
+    paragraphBuilder.addText(decodeHTMLStrict(title));
 
     // Add small empty line betwen title & description.
     paragraphBuilder.pushStyle(
@@ -154,7 +156,7 @@ export async function generateOpenGraphImage({
 
     // Add description.
     paragraphBuilder.pushStyle(new CanvasKit.TextStyle(textStyle(font.description)));
-    paragraphBuilder.addText(description);
+    paragraphBuilder.addText(decodeHTMLStrict(description));
 
     // Draw paragraph to canvas.
     const para = paragraphBuilder.build();

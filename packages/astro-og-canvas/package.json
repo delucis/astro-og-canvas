@@ -35,7 +35,8 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
-    "canvaskit-wasm": "^0.37.0"
+    "canvaskit-wasm": "^0.37.0",
+    "entities": "^4.4.0"
   },
   "peerDependencies": {
     "astro": "^1.0.0"
