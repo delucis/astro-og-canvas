@@ -1,4 +1,4 @@
-import { CanvasKitPromise, loadFonts, loadImage } from './assetLoaders';
+import { CanvasKitPromise, fontManager, loadImage } from './assetLoaders';
 import type {
   FontConfig,
   IllogicalSide,
@@ -134,17 +134,16 @@ export async function generateOpenGraphImage({
   }
 
   // Load and configure font families.
-  const fontData = await loadFonts(fonts);
-  const fontManager = CanvasKit.FontMgr.FromData(...fontData);
+  const fontMgr = await fontManager.get(fonts);
 
-  if (fontManager) {
+  if (fontMgr) {
     // Create paragraph with initial styles and add title.
     const paragraphStyle = new CanvasKit.ParagraphStyle({
       textAlign: isRtl ? CanvasKit.TextAlign.Right : CanvasKit.TextAlign.Left,
       textStyle: textStyle(font.title),
       textDirection: isRtl ? CanvasKit.TextDirection.RTL : CanvasKit.TextDirection.LTR,
     });
-    const paragraphBuilder = CanvasKit.ParagraphBuilder.Make(paragraphStyle, fontManager);
+    const paragraphBuilder = CanvasKit.ParagraphBuilder.Make(paragraphStyle, fontMgr);
     paragraphBuilder.addText(title);
 
     // Add small empty line betwen title & description.

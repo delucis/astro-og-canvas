@@ -1,3 +1,4 @@
+import type { FontMgr } from 'canvaskit-wasm';
 import init from 'canvaskit-wasm';
 import fs from 'fs/promises';
 import { createRequire } from 'module';
@@ -12,56 +13,68 @@ export const CanvasKitPromise = init({
   locateFile: (file) => resolve(`canvaskit-wasm/bin/${file}`),
 });
 
-const fonts = { loading: Promise.resolve(), cache: new Map<string, ArrayBuffer | undefined>() };
+class FontManager {
+  /** Font data cache to avoid repeat downloads. */
+  readonly #cache = new Map<string, ArrayBuffer | undefined>();
+  /** Promise to co-ordinate `#get` calls to run sequentially. */
+  #loading = Promise.resolve();
+  /** Current `CanvasKit.FontMgr` instance. */
+  #manager?: FontMgr;
 
-/**
- * Load fonts. Backed by an in-memory cache, so fonts are only downloaded once.
- * @param fontUrls Array of URLs to remote font files (TTF recommended).
- * @returns Array of resolved font data.
- */
-export const loadFonts = async (fontUrls: string[]): Promise<ArrayBuffer[]> => {
-  await fonts.loading;
-  const fontData: ArrayBuffer[] = [];
-  let hasNew = false;
-  fonts.loading = new Promise(async (resolve) => {
-    for (const url of fontUrls) {
-      if (!fonts.cache.has(url)) {
-        hasNew = true;
-        debug('Downloading', url);
-        const response = await fetch(url);
-        if (response.ok) {
-          fonts.cache.set(url, await response.arrayBuffer());
-        } else {
-          fonts.cache.set(url, undefined);
-          error(response.status, response.statusText, '—', url);
-        }
-      }
-      const font = fonts.cache.get(url);
-      if (font) fontData.push(font);
-    }
-    resolve();
-  });
-  await fonts.loading;
-  if (hasNew) await logFontsLoaded(fontData);
-  return fontData;
-};
+  /** Instantiate a new `CanvasKit.FontMgr` instance with all the currently cached fonts. */
+  async #updateManager(): Promise<void> {
+    const CanvasKit = await CanvasKitPromise;
+    const fontData = Array.from(this.#cache.values()).filter((v) => !!v) as ArrayBuffer[];
+    this.#manager = CanvasKit.FontMgr.FromData(...fontData)!;
 
-/**
- * Log to the terminal which font families have been loaded.
- * Mostly useful so users can see the name of families as parsed by CanvasKit.
- */
-async function logFontsLoaded(fonts: ArrayBuffer[]) {
-  const CanvasKit = await CanvasKitPromise;
-  const fontMgr = CanvasKit.FontMgr.FromData(...fonts);
-  if (fontMgr) {
-    const fontCount = fontMgr.countFamilies();
+    // Log to the terminal which font families have been loaded.
+    // Mostly useful so users can see the name of families as parsed by CanvasKit.
+    const fontCount = this.#manager.countFamilies();
     const fontFamilies = [];
-    for (let i = 0; i < fontCount; i++) {
-      fontFamilies.push(fontMgr.getFamilyName(i));
-    }
+    for (let i = 0; i < fontCount; i++) fontFamilies.push(this.#manager.getFamilyName(i));
     debug('Loaded', fontCount, 'font families:\n' + fontFamilies.join(', '));
   }
+
+  /**
+   * Get a font manager instance for the provided fonts.
+   *
+   * Fonts are backed by an in-memory cache, so fonts are only downloaded once.
+   *
+   * Tries to avoid repeated instantiation of `CanvasKit.FontMgr` due to a memory leak
+   * in their implementation. Will only reinstantiate if it sees a new font in the
+   * `fontUrls` array.
+   *
+   * @param fontUrls Array of URLs to remote font files (TTF recommended).
+   * @returns A font manager for all fonts loaded up until now.
+   */
+  async get(fontUrls: string[]): Promise<FontMgr> {
+    await this.#loading;
+    const fontData: ArrayBuffer[] = [];
+    let hasNew = false;
+    this.#loading = new Promise<void>(async (resolve) => {
+      for (const url of fontUrls) {
+        if (!this.#cache.has(url)) {
+          hasNew = true;
+          debug('Downloading', url);
+          const response = await fetch(url);
+          if (response.ok) {
+            this.#cache.set(url, await response.arrayBuffer());
+          } else {
+            this.#cache.set(url, undefined);
+            error(response.status, response.statusText, '—', url);
+          }
+        }
+        const font = this.#cache.get(url);
+        if (font) fontData.push(font);
+      }
+      resolve();
+    });
+    await this.#loading;
+    if (hasNew) this.#updateManager();
+    return this.#manager!;
+  }
 }
+export const fontManager = new FontManager();
 
 const images = { cache: new Map<string, Buffer>(), loading: Promise.resolve() };
 
