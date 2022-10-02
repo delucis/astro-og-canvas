@@ -50,10 +50,13 @@ export async function generateOpenGraphImage({
   };
 
   const isRtl = dir === 'rtl';
-  const marginInlineStart = padding + (border.side === 'inline-start' ? border.width : 0);
-  const marginInlineEnd = padding + (border.side === 'inline-end' ? border.width : 0);
-  const marginBlockStart = padding + (border.side === 'block-start' ? border.width : 0);
-  const marginBlockEnd = padding + (border.side === 'block-end' ? border.width : 0);
+  const margin: Record<LogicalSide, number> = {
+    'block-start': padding,
+    'block-end': padding,
+    'inline-start': padding,
+    'inline-end': padding,
+  };
+  margin[border.side] += border.width;
   const [width, height] = [1200, 630];
 
   const CanvasKit = await CanvasKitPromise;
@@ -130,10 +133,10 @@ export async function generateOpenGraphImage({
       );
 
       const imageLeft = isRtl
-        ? (1 / xRatio) * (width - marginInlineStart) - logoW
-        : (1 / xRatio) * marginInlineStart;
+        ? (1 / xRatio) * (width - margin['inline-start']) - logoW
+        : (1 / xRatio) * margin['inline-start'];
 
-      canvas.drawImage(img, imageLeft, (1 / yRatio) * marginBlockStart, imagePaint);
+      canvas.drawImage(img, imageLeft, (1 / yRatio) * margin['block-start'], imagePaint);
     }
   }
 
@@ -162,12 +165,15 @@ export async function generateOpenGraphImage({
 
     // Draw paragraph to canvas.
     const para = paragraphBuilder.build();
-    const paraWidth = width - marginInlineStart - marginInlineEnd - padding;
+    const paraWidth = width - margin['inline-start'] - margin['inline-end'] - padding;
     para.layout(paraWidth);
-    const paraLeft = isRtl ? width - marginInlineStart - para.getMaxWidth() : marginInlineStart;
-    const minTop = marginBlockStart + logoHeight + (logoHeight ? padding : 0);
+    const paraLeft = isRtl
+      ? width - margin['inline-start'] - para.getMaxWidth()
+      : margin['inline-start'];
+    const minTop = margin['block-start'] + logoHeight + (logoHeight ? padding : 0);
     const maxTop = minTop + (logoHeight ? padding : 0);
-    const paraTop = Math.max(minTop, Math.min(maxTop, height - marginBlockEnd - para.getHeight()));
+    const naturalTop = height - margin['block-end'] - para.getHeight();
+    const paraTop = Math.max(minTop, Math.min(maxTop, naturalTop));
     canvas.drawParagraph(para, paraLeft, paraTop);
   }
 
