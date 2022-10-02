@@ -1,5 +1,11 @@
 # astro-og-canvas
 
+## 0.1.4
+
+### Patch Changes
+
+- cadcdb5: Improve layout logic to better handle long text
+
 ## 0.1.3
 
 ### Patch Changes
