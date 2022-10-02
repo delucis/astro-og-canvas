@@ -10,6 +10,40 @@ import type {
   XYWH,
 } from './types';
 
+const [width, height] = [1200, 630];
+const edges: Record<IllogicalSide, XYWH> = {
+  top: [0, 0, width, 0],
+  bottom: [0, height, width, height],
+  left: [0, 0, 0, height],
+  right: [width, 0, width, height],
+};
+const defaults: {
+  border: NonNullable<Required<OGImageOptions['border']>>;
+  font: Record<'title' | 'description', Required<FontConfig>>;
+} = {
+  border: {
+    color: [255, 255, 255] as RGBColor,
+    width: 0,
+    side: 'inline-start' as LogicalSide,
+  },
+  font: {
+    title: {
+      color: [255, 255, 255],
+      size: 70,
+      lineHeight: 1,
+      weight: 'Normal',
+      families: ['Noto Sans'],
+    },
+    description: {
+      color: [255, 255, 255],
+      size: 40,
+      lineHeight: 1.3,
+      weight: 'Normal',
+      families: ['Noto Sans'],
+    },
+  },
+};
+
 export async function generateOpenGraphImage({
   title,
   description = '',
@@ -23,30 +57,10 @@ export async function generateOpenGraphImage({
   format = 'PNG',
   quality = 90,
 }: OGImageOptions) {
-  const border = {
-    color: [255, 255, 255] as RGBColor,
-    width: 0,
-    side: 'inline-start' as LogicalSide,
-    ...borderConfig,
-  };
-
-  const font: Record<'title' | 'description', Required<FontConfig>> = {
-    title: {
-      color: [255, 255, 255],
-      size: 70,
-      lineHeight: 1,
-      weight: 'Normal',
-      families: fontConfig.description?.families || ['Noto Sans'],
-      ...fontConfig.title,
-    },
-    description: {
-      color: [255, 255, 255],
-      size: 40,
-      lineHeight: 1.3,
-      weight: 'Normal',
-      families: fontConfig.title?.families || ['Noto Sans'],
-      ...fontConfig.description,
-    },
+  const border = { ...defaults.border, ...borderConfig };
+  const font = {
+    title: { ...defaults.font.title, ...fontConfig.title },
+    description: { ...defaults.font.description, ...fontConfig.description },
   };
 
   const isRtl = dir === 'rtl';
@@ -57,7 +71,6 @@ export async function generateOpenGraphImage({
     'inline-end': padding,
   };
   margin[border.side] += border.width;
-  const [width, height] = [1200, 630];
 
   const CanvasKit = await CanvasKitPromise;
 
@@ -93,12 +106,6 @@ export async function generateOpenGraphImage({
     borderStyle.setStyle(CanvasKit.PaintStyle.Stroke);
     borderStyle.setColor(CanvasKit.Color(...border.color));
     borderStyle.setStrokeWidth(border.width * 2);
-    const edges: Record<IllogicalSide, XYWH> = {
-      top: [0, 0, width, 0],
-      bottom: [0, height, width, height],
-      left: [0, 0, 0, height],
-      right: [width, 0, width, height],
-    };
     const borders: Record<LogicalSide, XYWH> = {
       'block-start': edges.top,
       'block-end': edges.bottom,
