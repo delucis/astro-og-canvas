@@ -6,8 +6,8 @@ import { pages } from './_pages';
 <Layout>
   <main>
     {
-      Object.entries(pages).map(([key, { title, description }]) => (
-        <article>
+      Object.entries(pages).map(([key, { title, description, dir }]) => (
+        <article dir={dir || 'ltr'}>
           <header>
             <h2 set:html={title} />
             <p>{description}</p>

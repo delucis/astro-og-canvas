@@ -37,4 +37,13 @@ export const pages: Record<string, { title: string; description: string; dir?: '
     title: 'Konfigurations&shy;referenz',
     description: '',
   },
+  'en-concepts-mpa-vs-spa.md': {
+    title: 'MPAs vs. SPAs',
+    description:
+      'Understanding the tradeoffs between Multi-Page Application (MPA) and Single-Page Application (SPA) architecture is key to understanding what makes Astro different from other web frameworks.',
+  },
+  'es-guides-deploy-flightcontrol.md': {
+    title: 'Despliega tu proyecto de Astro en AWS con Flightcontrol',
+    description: 'Cómo desplegar tu proyecto de Astro en AWS con Flightcontrol',
+  },
 };

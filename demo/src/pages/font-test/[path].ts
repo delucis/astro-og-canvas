@@ -8,11 +8,16 @@ export const { getStaticPaths, get } = OGImageRoute({
     title: page.title,
     description: page.description,
     dir: page.dir,
-    logo: { path: './src/astro-docs-logo.png', size: [350] },
-    border: { width: 10 },
-    padding: 40,
+    logo: { path: './src/astro-docs-logo.png', size: [400] },
+    border: { color: [255, 93, 1], width: 20, side: 'inline-start' },
+    bgGradient: [
+      [42, 35, 62],
+      [23, 20, 36],
+    ],
+    padding: 60,
     font: {
       title: {
+        size: 78,
         families: [
           'Work Sans',
           'Noto Sans Black',
@@ -24,6 +29,8 @@ export const { getStaticPaths, get } = OGImageRoute({
         weight: 'ExtraBold',
       },
       description: {
+        size: 45,
+        lineHeight: 1.25,
         families: [
           'Work Sans',
           'Noto Sans',
