@@ -51,7 +51,9 @@ export async function generateOpenGraphImage({
 
   const isRtl = dir === 'rtl';
   const marginInlineStart = padding + (border.side === 'inline-start' ? border.width : 0);
+  const marginInlineEnd = padding + (border.side === 'inline-end' ? border.width : 0);
   const marginBlockStart = padding + (border.side === 'block-start' ? border.width : 0);
+  const marginBlockEnd = padding + (border.side === 'block-end' ? border.width : 0);
   const [width, height] = [1200, 630];
 
   const CanvasKit = await CanvasKitPromise;
@@ -160,13 +162,13 @@ export async function generateOpenGraphImage({
 
     // Draw paragraph to canvas.
     const para = paragraphBuilder.build();
-    para.layout((6 * (width - 2 * padding)) / 7);
+    const paraWidth = width - marginInlineStart - marginInlineEnd - padding;
+    para.layout(paraWidth);
     const paraLeft = isRtl ? width - marginInlineStart - para.getMaxWidth() : marginInlineStart;
-    canvas.drawParagraph(
-      para,
-      paraLeft,
-      marginBlockStart + logoHeight + (logoHeight ? padding * 2 : 0)
-    );
+    const minTop = marginBlockStart + logoHeight + (logoHeight ? padding : 0);
+    const maxTop = minTop + (logoHeight ? padding : 0);
+    const paraTop = Math.max(minTop, Math.min(maxTop, height - marginBlockEnd - para.getHeight()));
+    canvas.drawParagraph(para, paraLeft, paraTop);
   }
 
   // Render canvas to a buffer.
