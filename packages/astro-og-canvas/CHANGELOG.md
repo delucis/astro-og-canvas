@@ -1,5 +1,11 @@
 # astro-og-canvas
 
+## 0.1.5
+
+### Patch Changes
+
+- 98be213: Handle index files in default slugifier (e.g. `/foo/index.md` now becomes `/foo.png` instead of `/foo/index.png`)
+
 ## 0.1.4
 
 ### Patch Changes
