@@ -11,3 +11,4 @@ This test project uses `astro-og-canvas` to generate OpenGraph images from code.
 ![Example image](/og/index.png)
 
 - [Nested](/nested)
+- [Font Tests](/font-test)

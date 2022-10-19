@@ -8,6 +8,6 @@ layout: ../../layouts/Layout.astro
 
 This test project uses `astro-og-canvas` to generate OpenGraph images from code.
 
-![Example image](/og/nested/index.png)
+![Example image](/og/nested.png)
 
 - [Home](/)

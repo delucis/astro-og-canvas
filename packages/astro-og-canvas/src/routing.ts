@@ -6,6 +6,7 @@ const pathToSlug = (path: string): string => {
   path = path.replace(/^\/src\/pages\//, '');
   const extIndex = path.lastIndexOf('.');
   path = path.slice(0, extIndex) + '.png';
+  path = path.replace(/\/index\.png$/, '.png');
   return path;
 };
 
