@@ -1,5 +1,11 @@
 # astro-og-canvas
 
+## 0.1.6
+
+### Patch Changes
+
+- c063c32: Allow installation in Astro v2 projects
+
 ## 0.1.5
 
 ### Patch Changes
