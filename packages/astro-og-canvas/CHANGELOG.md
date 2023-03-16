@@ -1,5 +1,11 @@
 # astro-og-canvas
 
+## 0.1.7
+
+### Patch Changes
+
+- 8c10732: Manually free memory after generating an image
+
 ## 0.1.6
 
 ### Patch Changes
