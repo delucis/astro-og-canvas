@@ -188,5 +188,9 @@ export async function generateOpenGraphImage({
   const image = surface.makeImageSnapshot();
   const imageBytes =
     image.encodeToBytes(CanvasKit.ImageFormat[format], quality) || new Uint8Array();
+
+  // Free any memory our surface might be hanging onto.
+  surface.dispose();
+
   return Buffer.from(imageBytes);
 }
