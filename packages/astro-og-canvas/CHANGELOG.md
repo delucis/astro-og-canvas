@@ -1,5 +1,12 @@
 # astro-og-canvas
 
+## 0.1.8
+
+### Patch Changes
+
+- a598023: Fix unexpected slug truncation for paths without extension
+- ed36da8: Bump dev dependencies
+
 ## 0.1.7
 
 ### Patch Changes
