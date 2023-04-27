@@ -16,7 +16,7 @@
     "@changesets/cli": "^2.24.4",
     "astro": "^2.3.1",
     "tsm": "^2.2.2",
-    "typescript": "^4.8.3",
+    "typescript": "^5.0.0",
     "uvu": "^0.5.6"
   }
 }
