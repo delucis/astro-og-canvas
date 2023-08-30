@@ -3,6 +3,7 @@
   "include": ["src"],
   "compilerOptions": {
     "declaration": true,
+    "emitDeclarationOnly": true,
     "noEmit": false,
     "outDir": "./dist",
     "skipLibCheck": true
