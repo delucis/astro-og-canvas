@@ -14,12 +14,12 @@ npm i astro-og-canvas
 
 1. Create a new file in your `src/pages/` directory. For example, `src/pages/open-graph/[...route].ts`.
 
-2. Use the `OGImageRoute` helper to create `getStaticPaths` and `get` functions for you:
+2. Use the `OGImageRoute` helper to create `getStaticPaths` and `GET` functions for you:
 
    ```ts
    import { OGImageRoute } from 'astro-og-canvas';
 
-   export const { getStaticPaths, get } = OGImageRoute({
+   export const { getStaticPaths, get: GET } = OGImageRoute({
      // Tell us the name of your dynamic route segment.
      // In this case it’s `route`, because the file is named `[...route].ts`.
      param: 'route',
