@@ -14,7 +14,7 @@
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.6",
     "@changesets/cli": "^2.24.4",
-    "astro": "^2.3.1",
+    "astro": "^3.0.0",
     "tsm": "^2.3.0",
     "typescript": "^5.0.0",
     "uvu": "^0.5.6"
