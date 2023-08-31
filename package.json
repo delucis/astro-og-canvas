@@ -7,7 +7,7 @@
     "packages/**/*"
   ],
   "scripts": {
-    "build:demo": "cd demo && npm run build && cd ../",
+    "build:demo": "npm run build --workspace=demo",
     "prepublish": "npm run build --workspace=astro-og-canvas",
     "test": "npm run build:demo && tsm node_modules/uvu/bin.js test"
   },

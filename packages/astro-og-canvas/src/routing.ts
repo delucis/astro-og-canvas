@@ -36,11 +36,11 @@ function createOGImageEndpoint({ getSlug = pathToSlug, ...opts }: OGImageRouteCo
 
 export function OGImageRoute(opts: OGImageRouteConfig): {
   getStaticPaths: GetStaticPaths;
-  get: APIRoute;
+  GET: APIRoute;
 } {
   return {
     getStaticPaths: makeGetStaticPaths(opts),
-    get: createOGImageEndpoint(opts),
+    GET: createOGImageEndpoint(opts),
   };
 }
 
