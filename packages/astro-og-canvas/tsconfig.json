@@ -4,6 +4,7 @@
   "compilerOptions": {
     "declaration": true,
     "noEmit": false,
+    "allowImportingTsExtensions": false,
     "outDir": "./dist",
     "skipLibCheck": true
   }
