@@ -7,14 +7,14 @@
     "packages/**/*"
   ],
   "scripts": {
-    "build:demo": "cd demo && npm run build && cd ../",
+    "build:demo": "npm run build --workspace=demo",
     "prepublish": "npm run build --workspace=astro-og-canvas",
     "test": "npm run build:demo && tsm node_modules/uvu/bin.js test"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.6",
     "@changesets/cli": "^2.24.4",
-    "astro": "^2.3.1",
+    "astro": "^3.0.3",
     "tsm": "^2.3.0",
     "typescript": "^5.0.0",
     "uvu": "^0.5.6"

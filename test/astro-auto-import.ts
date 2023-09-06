@@ -13,10 +13,10 @@ function loadImage(path: string) {
 }
 
 test('it should have created an image in the build output', () => {
-  assert.not.throws(() => loadImage('/og/index.png'));
+  assert.not.throws(()=>loadImage('/og/index.png'));
 });
 
-test('it should have built the page OK', () => {
+test('it should have built the index page correctly', () => {
   const page = loadRoute('/');
   assert.match(page, /<img src="\/og\/index.png" alt="Example image">/);
 });
