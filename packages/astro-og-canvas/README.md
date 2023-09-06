@@ -2,10 +2,16 @@
 
 This package provides utlities to generate OpenGraph images for the pages on your Astro site.
 
-## Installation[^1]
+## Installation
 
 ```shell
 npm i astro-og-canvas
+```
+
+**Using `pnpm`?** `pnpm` users will also need to install `canvaskit-wasm` as a direct dependency:
+
+```shell
+pnpm i canvaskit-wasm
 ```
 
 ## Version compatibility
@@ -148,5 +154,3 @@ export interface FontConfig {
 
 MIT
 ```
-
-[^1]: If installing with Astro, adding `canvaskit-wasm` as a direct dependency of your project is required. Run `npm i canvaskit-wasm`.
