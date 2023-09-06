@@ -1,5 +1,11 @@
 # astro-og-canvas
 
+## 0.2.1
+
+### Patch Changes
+
+- 467523f: Add note about `canvaskit-wasm` for pnpm users to README
+
 ## 0.2.0
 
 ### Minor Changes
