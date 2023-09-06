@@ -27,21 +27,20 @@ function createOGImageEndpoint({ getSlug = pathToSlug, ...opts }: OGImageRouteCo
       (page) => getSlug(...page) === params[opts.param]
     );
     if (!pageEntry) return new Response('Page not found', { status: 404 });
-    return {
-      body: (await generateOpenGraphImage(
-        await opts.getImageOptions(...pageEntry)
-      )) as unknown as string,
-    };
+
+    return new Response(await generateOpenGraphImage(
+      await opts.getImageOptions(...pageEntry)
+    ));
   };
 }
 
 export function OGImageRoute(opts: OGImageRouteConfig): {
   getStaticPaths: GetStaticPaths;
-  get: APIRoute;
+  GET: APIRoute;
 } {
   return {
     getStaticPaths: makeGetStaticPaths(opts),
-    get: createOGImageEndpoint(opts),
+    GET: createOGImageEndpoint(opts),
   };
 }
 

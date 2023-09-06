@@ -8,18 +8,25 @@ This package provides utlities to generate OpenGraph images for the pages on you
 npm i astro-og-canvas
 ```
 
+## Version compatibility
+
+| astro | astro-og-canvas |
+| --- | --- |
+| <=`2.x` | [`0.1.x`](https://github.com/delucis/astro-og-canvas/blob/astro-og-canvas%400.1.8/README.md) | 
+| >=`3.x` | [`0.2.x`](https://github.com/delucis/astro-og-canvas/blob/astro-og-canvas%400.2.0/README.md) |
+
 ## Usage
 
 ### Creating an OpenGraph image endpoint
 
 1. Create a new file in your `src/pages/` directory. For example, `src/pages/open-graph/[...route].ts`.
 
-2. Use the `OGImageRoute` helper to create `getStaticPaths` and `get` functions for you:
+2. Use the `OGImageRoute` helper to create `getStaticPaths` and `GET` functions for you:
 
    ```ts
    import { OGImageRoute } from 'astro-og-canvas';
 
-   export const { getStaticPaths, get } = OGImageRoute({
+   export const { getStaticPaths, GET } = OGImageRoute({
      // Tell us the name of your dynamic route segment.
      // In this case it’s `route`, because the file is named `[...route].ts`.
      param: 'route',

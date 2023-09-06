@@ -1,7 +1,7 @@
 {
   "name": "astro-og-canvas",
   "description": "Generate OpenGraph images for your Astro site",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "type": "module",
   "types": "./dist/index.d.ts",
   "author": "Chris Swithinbank <swithinbank@gmail.com> (http://chrisswithinbank.net/)",
@@ -31,7 +31,7 @@
   ],
   "devDependencies": {
     "@types/node": "^16.11.62",
-    "astro": "^2.3.1",
+    "astro": "^3.0.3",
     "typescript": "^5.0.0"
   },
   "dependencies": {
@@ -39,9 +39,9 @@
     "entities": "^4.4.0"
   },
   "peerDependencies": {
-    "astro": "^1.0.0 || ^2.0.0-beta"
+    "astro": "^3.0.0"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=18.14.1"
   }
 }
