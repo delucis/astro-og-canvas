@@ -149,8 +149,8 @@ export interface FontConfig {
    */
   families?: string[];
 }
+```
 
 ## License
 
 MIT
-```
