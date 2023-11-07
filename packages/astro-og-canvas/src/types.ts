@@ -70,7 +70,10 @@ export interface OGImageOptions {
     /** Font style for the page description. */
     description?: FontConfig;
   };
-  /** Array of font URLs to load and use when rendering text. */
+  /**
+   * Array of font URLs or file paths to load and use when rendering text,
+   * e.g. `['./src/fonts/local-font.ttf', 'https://example.com/cdn/remote-font.ttf']`
+   */
   fonts?: string[];
   /** Image format to save to. Default: `'PNG'` */
   format?: Exclude<keyof CanvasKit['ImageFormat'], 'values'>;
