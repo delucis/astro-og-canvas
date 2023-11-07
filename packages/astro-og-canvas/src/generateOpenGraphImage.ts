@@ -45,6 +45,7 @@ const defaults: {
 };
 
 export async function generateOpenGraphImage({
+  cacheDir = './node_modules/.astro-open-graph',
   title,
   description = '',
   dir = 'ltr',

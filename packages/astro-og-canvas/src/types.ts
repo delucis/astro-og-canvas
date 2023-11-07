@@ -28,6 +28,12 @@ export interface FontConfig {
 }
 
 export interface OGImageOptions {
+  /**
+   * Directory to use for caching images across builds.
+   * Set to `false` to disable caching.
+   * Default: `./node_modules/.astro-open-graph`
+   */
+  cacheDir?: string | false;
   /** Page title. */
   title: string;
   /** Short page description. */

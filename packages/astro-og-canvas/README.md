@@ -118,6 +118,13 @@ export interface OGImageOptions {
 
   /** Array of font URLs to load and use when rendering text. */
   fonts?: string[];
+
+  /**
+   * Directory to cache images in across builds.
+   * Default: `./node_modules/.astro-open-graph`
+   * Set to `false` to disable caching.
+   */
+  cacheDir?: string | false;
 }
 ```
 
