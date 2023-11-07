@@ -54,7 +54,7 @@ class FontManager {
       for (const url of fontUrls) {
         if (this.#cache.has(url)) continue;
         hasNew = true;
-        debug('Downloading', url);
+        debug('Loading', url);
         if (/^https?:\/\//.test(url)) {
           const response = await fetch(url);
           if (response.ok) {
