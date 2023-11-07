@@ -55,7 +55,7 @@ class FontManager {
         if (this.#cache.has(url)) continue;
         hasNew = true;
         debug('Downloading', url);
-        if (/https?:\/\//.test(url)) {
+        if (/^https?:\/\//.test(url)) {
           const response = await fetch(url);
           if (response.ok) {
             this.#cache.set(url, await response.arrayBuffer());
