@@ -71,8 +71,17 @@ export interface OGImageOptions {
     description?: FontConfig;
   };
   /**
-   * Array of font URLs or file paths to load and use when rendering text,
-   * e.g. `['./src/fonts/local-font.ttf', 'https://example.com/cdn/remote-font.ttf']`
+   * Array of font URLs or file paths to load and use when rendering text.
+   *
+   * @example
+   * {
+   *   fonts: [
+   *     // Local font file path relative to the project root:
+   *     './src/fonts/local-font.ttf',
+   *     // URL to a font file on a remote web server:
+   *     'https://example.com/cdn/remote-font.ttf'
+   *   ],
+   * }
    */
   fonts?: string[];
   /** Image format to save to. Default: `'PNG'` */
