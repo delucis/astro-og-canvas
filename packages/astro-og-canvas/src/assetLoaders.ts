@@ -56,13 +56,18 @@ class FontManager {
       for (const url of fontUrls) {
         if (this.#cache.has(url)) continue;
         hasNew = true;
-        debug('Downloading', url);
-        const response = await fetch(url);
-        if (response.ok) {
-          this.#cache.set(url, await response.arrayBuffer());
+        debug('Loading', url);
+        if (/^https?:\/\//.test(url)) {
+          const response = await fetch(url);
+          if (response.ok) {
+            this.#cache.set(url, await response.arrayBuffer());
+          } else {
+            this.#cache.set(url, undefined);
+            error(response.status, response.statusText, '—', url);
+          }
         } else {
-          this.#cache.set(url, undefined);
-          error(response.status, response.statusText, '—', url);
+          const file = await fs.readFile(url);
+          this.#cache.set(url, file);
         }
       }
       resolve();
