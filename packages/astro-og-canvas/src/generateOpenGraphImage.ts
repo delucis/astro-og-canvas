@@ -71,7 +71,7 @@ class ImageCache {
 const imageCache = new ImageCache();
 
 export async function generateOpenGraphImage({
-  cacheDir = './node_modules/.astro-open-graph',
+  cacheDir = './node_modules/.astro-og-canvas',
   title,
   description = '',
   dir = 'ltr',

@@ -31,7 +31,7 @@ export interface OGImageOptions {
   /**
    * Directory to use for caching images across builds.
    * Set to `false` to disable caching.
-   * Default: `./node_modules/.astro-open-graph`
+   * Default: `./node_modules/.astro-og-canvas`
    */
   cacheDir?: string | false;
   /** Page title. */
