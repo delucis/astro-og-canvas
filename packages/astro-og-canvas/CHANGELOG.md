@@ -1,5 +1,12 @@
 # astro-og-canvas
 
+## 0.3.0
+
+### Minor Changes
+
+- 1b83057: Add support for loading local font files
+- 19f025a: Cache images across builds
+
 ## 0.2.1
 
 ### Patch Changes
