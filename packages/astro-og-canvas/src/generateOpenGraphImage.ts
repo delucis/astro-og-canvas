@@ -1,6 +1,9 @@
+import { deterministicString } from 'deterministic-object-hash';
 import { decodeHTMLStrict } from 'entities';
-
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import { CanvasKitPromise, fontManager, loadImage } from './assetLoaders';
+import { shorthash } from './shorthash';
 import type {
   FontConfig,
   IllogicalSide,
@@ -44,6 +47,29 @@ const defaults: {
   },
 };
 
+class ImageCache {
+  #dirCache = new Set<string>();
+  /** Ensure the requested directory exists. */
+  async #mkdir(dir: string) {
+    if (this.#dirCache.has(dir)) return;
+    try {
+      await fs.mkdir(dir, { recursive: true });
+      this.#dirCache.add(dir);
+    } catch {}
+  }
+  /** Retrieve an image from the file system cache if it exists. */
+  async get(cachePath: string): Promise<Buffer | undefined> {
+    await this.#mkdir(path.dirname(cachePath));
+    return await fs.readFile(cachePath).catch(() => undefined);
+  }
+  /** Write an image to the file system cache. */
+  async set(cachePath: string, image: Buffer): Promise<void> {
+    await this.#mkdir(path.dirname(cachePath));
+    await fs.writeFile(cachePath, image).catch(() => undefined);
+  }
+}
+const imageCache = new ImageCache();
+
 export async function generateOpenGraphImage({
   cacheDir = './node_modules/.astro-open-graph',
   title,
@@ -58,6 +84,35 @@ export async function generateOpenGraphImage({
   format = 'PNG',
   quality = 90,
 }: OGImageOptions) {
+  // Load and configure font families.
+  const fontMgr = await fontManager.get(fonts);
+  const loadedLogo = logo && (await loadImage(logo.path));
+
+  /** A deterministic hash based on inputs. */
+  const hash = shorthash(
+    deterministicString([
+      title,
+      description,
+      dir,
+      bgGradient,
+      borderConfig,
+      padding,
+      logo,
+      fontConfig,
+      fonts,
+      quality,
+      loadedLogo?.hash,
+      fonts.map((font) => fontManager.getHash(font)),
+    ])
+  );
+
+  let cacheFilePath: string | undefined;
+  if (cacheDir) {
+    cacheFilePath = path.join(cacheDir, `${hash}.${format.toLowerCase()}`);
+    const cached = await imageCache.get(cacheFilePath);
+    if (cached) return cached;
+  }
+
   const border = { ...defaults.border, ...borderConfig };
   const font = {
     title: { ...defaults.font.title, ...fontConfig.title },
@@ -118,9 +173,8 @@ export async function generateOpenGraphImage({
 
   // Draw logo.
   let logoHeight = 0;
-  if (logo) {
-    const imgBuf = await loadImage(logo.path);
-    const img = CanvasKit.MakeImageFromEncoded(imgBuf);
+  if (logo && loadedLogo?.buffer) {
+    const img = CanvasKit.MakeImageFromEncoded(loadedLogo.buffer);
     if (img) {
       const logoH = img.height();
       const logoW = img.width();
@@ -147,9 +201,6 @@ export async function generateOpenGraphImage({
       canvas.drawImage(img, imageLeft, (1 / yRatio) * margin['block-start'], imagePaint);
     }
   }
-
-  // Load and configure font families.
-  const fontMgr = await fontManager.get(fonts);
 
   if (fontMgr) {
     // Create paragraph with initial styles and add title.
@@ -193,5 +244,8 @@ export async function generateOpenGraphImage({
   // Free any memory our surface might be hanging onto.
   surface.dispose();
 
-  return Buffer.from(imageBytes);
+  const imgBuffer = Buffer.from(imageBytes);
+
+  if (cacheFilePath) await imageCache.set(cacheFilePath, imgBuffer);
+  return imgBuffer;
 }
