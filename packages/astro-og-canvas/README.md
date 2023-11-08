@@ -16,10 +16,10 @@ pnpm i canvaskit-wasm
 
 ## Version compatibility
 
-| astro | astro-og-canvas |
-| --- | --- |
-| <=`2.x` | [`0.1.x`](https://github.com/delucis/astro-og-canvas/blob/astro-og-canvas%400.1.8/README.md) | 
-| >=`3.x` | [`0.2.x`](https://github.com/delucis/astro-og-canvas/blob/astro-og-canvas%400.2.0/README.md) |
+| astro  | astro-og-canvas                                                                               |
+| ------ | --------------------------------------------------------------------------------------------- |
+| `≤2.x` | [`0.1.x`](https://github.com/delucis/astro-og-canvas/blob/astro-og-canvas%400.1.8/README.md)  |
+| `≥3.x` | [`≥0.2.x`](https://github.com/delucis/astro-og-canvas/blob/astro-og-canvas%400.2.0/README.md) |
 
 ## Usage
 
@@ -29,7 +29,9 @@ pnpm i canvaskit-wasm
 
 2. Use the `OGImageRoute` helper to create `getStaticPaths` and `GET` functions for you:
 
-   ```ts
+   ```js
+   // src/pages/open-graph/[...route].ts
+
    import { OGImageRoute } from 'astro-og-canvas';
 
    export const { getStaticPaths, GET } = OGImageRoute({
@@ -38,15 +40,19 @@ pnpm i canvaskit-wasm
      param: 'route',
 
      // A collection of pages to generate images for.
-     // This can be any map of paths to data, not necessarily a glob result.
-     pages: await import.meta.glob('/src/pages/**/*.md', { eager: true }),
+     // The keys of this object are used to generate the path for that image.
+     // In this example, we generate one image at `/open-graph/example.png`.
+     pages: {
+      'example': {
+        title: 'Example Page',
+        description: 'Description of this page shown in smaller text',
+      }
+     }
 
-     // For each page, this callback will be used to customize the OpenGraph
-     // image. For example, if `pages` was passed a glob like above, you
-     // could read values from frontmatter.
+     // For each page, this callback will be used to customize the OpenGraph image.
      getImageOptions: (path, page) => ({
-       title: page.frontmatter.title,
-       description: page.frontmatter.description,
+       title: page.title,
+       description: page.description,
        logo: {
          path: './src/astro-docs-logo.png',
        },
@@ -54,6 +60,89 @@ pnpm i canvaskit-wasm
      }),
    });
    ```
+
+#### Generating `pages` from a content collection
+
+If you want to generate images for every file in a content collection, use `getCollection()` to load your content entries and convert the entries array to an object.
+
+The following example assumes a content collection schema with `title` and `description` keys in the frontmatter.
+
+```js
+import { getCollection } from 'astro:content';
+import { OGImageRoute } from 'astro-og-canvas';
+
+const collectionEntries = await getCollection('my-collection');
+
+// Map the array of content collection entries to create an object.
+// Converts [{ id: 'post.md', data: { title: 'Example', description: '' } }]
+// to { 'post.md': { title: 'Example', description: '' } }
+const pages = Object.fromEntries(collectionEntries.map(({ slug, data }) => [slug, data]));
+
+export const { getStaticPaths, GET } = OGImageRoute({
+  pages: pages,
+
+  getImageOptions: (path, page) => ({
+    title: page.title,
+    description: page.description,
+  }),
+});
+```
+
+#### Generating `pages` from Markdown files
+
+If you have a folder of Markdown files with `title` and `description` fields in their frontmatter, use `import.meta.glob()` to load and pass these to the `pages` option of `OGImageRoute`.
+
+In the following example, every Markdown file in the project’s `src/pages/` directory is loaded and will have an image generated for them:
+
+```js
+import { OGImageRoute } from 'astro-og-canvas';
+
+export const { getStaticPaths, GET } = OGImageRoute({
+  // Pass the glob result to pages
+  pages: await import.meta.glob('/src/pages/**/*.md', { eager: true }),
+
+  // Extract `title` and `description` from the glob result’s `frontmatter` property
+  getImageOptions: (path, page) => ({
+    title: page.frontmatter.title,
+    description: page.frontmatter.description,
+  }),
+
+  // ...
+});
+```
+
+#### Generating `pages` from other data sources
+
+`pages` can be any object you want. Its keys are used to generate the final route, but other than this, how you use it is up to you, so you can generate images from any data you like.
+
+<details>
+<summary>Pokémon API example</summary>
+
+The following example fetches some data about Pokémon using the [PokéAPI](https://pokeapi.co/) and then uses that to generate images:
+
+```js
+import { OGImageRoute } from 'astro-og-canvas';
+
+// Fetch first 20 Pokémon from the PokéAPI.
+const { results } = await fetch('https://pokeapi.co/api/v2/pokemon/').then((res) => res.json());
+// Fetch details for each Pokémon.
+const pokemon = {};
+for (const { url } of results) {
+  const details = await fetch(url).then((res) => res.json());
+  pokemon[details.name] = details;
+}
+
+export const { getStaticPaths, GET } = OGImageRoute({
+  pages: pokemon,
+
+  getImageOptions: (path, page) => ({
+    title: page.name,
+    description: `Pokémon #${page.order}`,
+  }),
+});
+```
+
+</details>
 
 ### Image Options
 
