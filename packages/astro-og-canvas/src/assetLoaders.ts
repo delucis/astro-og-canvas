@@ -1,7 +1,8 @@
 import type { FontMgr } from 'canvaskit-wasm';
 import init from 'canvaskit-wasm';
-import fs from 'fs/promises';
-import { createRequire } from 'module';
+import fs from 'node:fs/promises';
+import { createRequire } from 'node:module';
+import { shorthash } from './shorthash';
 const { resolve } = createRequire(import.meta.url);
 
 const debug = (...args: any[]) => console.debug('[astro-og-canvas]', ...args);
@@ -16,6 +17,7 @@ export const CanvasKitPromise = init({
 class FontManager {
   /** Font data cache to avoid repeat downloads. */
   readonly #cache = new Map<string, ArrayBuffer | undefined>();
+  readonly #hashCache = new Map<string, string>();
   /** Promise to co-ordinate `#get` calls to run sequentially. */
   #loading = Promise.resolve();
   /** Current `CanvasKit.FontMgr` instance. */
@@ -74,26 +76,44 @@ class FontManager {
     if (hasNew) await this.#updateManager();
     return this.#manager!;
   }
+
+  /** Get a short hash for a given font resource. */
+  getHash(url: string): string {
+    let hash = this.#hashCache.get(url) || '';
+    if (hash) return hash;
+    const buffer = this.#cache.get(url);
+    hash = buffer ? shorthash(Buffer.from(buffer).toString()) : '';
+    this.#hashCache.set(url, hash);
+    return hash;
+  }
 }
 export const fontManager = new FontManager();
 
-const images = { cache: new Map<string, Buffer>(), loading: Promise.resolve() };
+interface LoadedImage {
+  /** Pixel buffer for the loaded image. */
+  buffer: Buffer;
+  /** Short hash of the image’s buffer. */
+  hash: string;
+}
+
+const images = { cache: new Map<string, LoadedImage>(), loading: Promise.resolve() };
 
 /**
  * Load an image. Backed by an in-memory cache to avoid repeat disk-reads.
  * @param path Path to an image file, e.g. `./src/logo.png`.
  * @returns Buffer containing the image contents.
  */
-export const loadImage = async (path: string): Promise<Buffer> => {
+export const loadImage = async (path: string): Promise<LoadedImage> => {
   await images.loading;
-  let image: Buffer;
+  let image: LoadedImage;
   images.loading = new Promise(async (resolve) => {
     const cached = images.cache.get(path);
     if (cached) {
       image = cached;
     } else {
       // TODO: Figure out if there’s deno-compatible way to load images.
-      image = await fs.readFile(path);
+      const buffer = await fs.readFile(path);
+      image = { buffer, hash: shorthash(buffer.toString()) };
       images.cache.set(path, image);
     }
     resolve();

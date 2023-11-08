@@ -122,6 +122,13 @@ export interface OGImageOptions {
    * Local font paths are specified relative to your project’s root.
    */
   fonts?: string[];
+
+  /**
+   * Directory to cache images in across builds.
+   * Default: `./node_modules/.astro-og-canvas`
+   * Set to `false` to disable caching.
+   */
+  cacheDir?: string | false;
 }
 ```
 
