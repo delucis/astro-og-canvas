@@ -55,7 +55,7 @@ class ImageCache {
     try {
       await fs.mkdir(dir, { recursive: true });
       this.#dirCache.add(dir);
-    } catch {}
+    } catch { }
   }
   /** Retrieve an image from the file system cache if it exists. */
   async get(cachePath: string): Promise<Buffer | undefined> {
@@ -171,24 +171,38 @@ export async function generateOpenGraphImage({
       }
 
       const [bgTop, bgRight, bgBottom, bgLeft] = bgImage.margin;
-      const xMargin = bgRight + bgLeft;
-      const yMargin = bgTop + bgBottom;
+      //const xMargin = bgRight + bgLeft;
+      //const yMargin = bgTop + bgBottom;
       const bgH = bgImg.height();
       const bgW = bgImg.width();
-      let targetW, targetH, xRatio, yRatio;
 
-      if (bgW < bgH) {
-        targetW = width;
-        if (bgImage.crop) {
-          targetW -= xMargin;
+      let target;
+      let scaleRatio = 1;
+      const ratio = bgW / bgH;
+      // w = 1920 h = 1080
+      // target w' = 1200 h' = 630
+      // w * x = 1200 --- h * x = 630
+      // x = 1200 / 1920
+      // 
+
+      if (bgImage.size == "contain") {
+        if (ratio > 1) {
+          target = height;
+          // if (bgImage.crop) {
+          //   targetW -= xMargin;
+          // }
+          scaleRatio = width / bgW;
+
+        } else {
+          target = width;
+          // if (bgImage.crop) {
+          //   targetH -= yMargin;
+          // }
+          scaleRatio = height / bgH;
         }
-        targetH = ((targetW / bgW) * bgH);
-      } else {
-        targetH = height;
-        if (bgImage.crop) {
-          targetH -= yMargin;
-        }
-        targetW = ((targetH / bgH) * bgW);
+
+      } else if (bgImage.size == "cover") {
+
       }
 
       //  if (bgImage.crop) {
@@ -196,9 +210,8 @@ export async function generateOpenGraphImage({
       //    targetH -= yMargin;
       //  }
 
-      xRatio = targetW / bgW;
-      yRatio = targetH / bgH;
 
+console.log("\n\n\nscaleRatio\n\n\n", scaleRatio, target)
       //const cropRect = CanvasKit.XYWHRect(50, 50, width - 500, height - 500);
       //const cropRectFull = CanvasKit.XYWHRect(0, 0, width, height);
 
@@ -208,13 +221,18 @@ export async function generateOpenGraphImage({
       const bgImagePaint = new CanvasKit.Paint();
       bgImagePaint.setImageFilter(
         CanvasKit.ImageFilter.MakeMatrixTransform(
-          CanvasKit.Matrix.scaled(xRatio, yRatio),
+          CanvasKit.Matrix.scaled(scaleRatio, scaleRatio),
           { filter: CanvasKit.FilterMode.Linear },
           null
         )
       );
+      bgImage.fill = true;
+      if (bgImage.fill) {
+        canvas.drawImage(bgImg, 0, 0, bgImagePaint);
+      } else {
+        canvas.drawImage(bgImg, bgLeft, bgTop, bgImagePaint);
+      }
 
-      canvas.drawImage(bgImg, bgLeft, bgTop, bgImagePaint);
 
       if (bgImage.crop) {
         const gradientFramePaint = new CanvasKit.Paint();
