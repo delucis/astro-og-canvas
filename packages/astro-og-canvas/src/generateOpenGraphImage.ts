@@ -184,21 +184,13 @@ export async function generateOpenGraphImage({
       if (!bgImage.crop) {
         targetW -= xMargin;
         targetH -= yMargin;
-        bgImage.size = "cover";
+        bgImage.size = "contain";
       }
 
       if (bgImage.size == "cover") {
-        if (ratio > 1) {
-          scaleRatio = targetW / bgW;
-        } else {
-          scaleRatio = targetH / bgH;
-        }
+        scaleRatio = (ratio > 1 ? targetW / bgW : targetH / bgH);
       } else if (bgImage.size == "contain") {
-        if (ratio > 1) {
-          scaleRatio = targetH / bgH;
-        } else {
-          scaleRatio = targetW / bgW;
-        }
+        scaleRatio = (ratio > 1 ? targetH / bgH : targetW / bgW);
       }
 
       // Matrix transform to scale the logo to the desired size.
