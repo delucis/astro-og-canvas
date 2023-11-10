@@ -178,11 +178,7 @@ export async function generateOpenGraphImage({
 
       let scaleRatio = 1;
       const ratio = bgW / bgH;
-      // w = 1920 h = 1080
-      // target w' = 1200 h' = 630
-      // w * x = 1200 --- h * x = 630
-      // x = 1200 / 1920
-      // 
+
       let targetW = width;
       let targetH = height;
       if (!bgImage.crop) {
@@ -205,11 +201,6 @@ export async function generateOpenGraphImage({
         }
       }
 
-      //const cropRect = CanvasKit.XYWHRect(50, 50, width - 500, height - 500);
-      //const cropRectFull = CanvasKit.XYWHRect(0, 0, width, height);
-
-      //canvas.drawDRRect(bgRect,cropRect, bgePaint)
-
       // Matrix transform to scale the logo to the desired size.
       const bgImagePaint = new CanvasKit.Paint();
       bgImagePaint.setImageFilter(
@@ -220,13 +211,16 @@ export async function generateOpenGraphImage({
         )
       );
 
+
+
+      // Draw image
       if (bgImage.crop) {
         canvas.drawImage(bgImg, 0, 0, bgImagePaint);
       } else {
         canvas.drawImage(bgImg, bgLeft, bgTop, bgImagePaint);
       }
 
-
+      // Redraw gradient
       if (bgImage.crop) {
         const gradientFramePaint = new CanvasKit.Paint();
         gradientFramePaint.setShader(
@@ -242,7 +236,6 @@ export async function generateOpenGraphImage({
         const rightRect = CanvasKit.XYWHRect(width - bgRight, 0, bgRight, height);
         const bottomRect = CanvasKit.XYWHRect(0, height - bgBottom, width, bgBottom);
         const leftRect = CanvasKit.XYWHRect(0, 0, bgLeft, height);
-
         canvas.drawRect(topRect, gradientFramePaint);
         canvas.drawRect(rightRect, gradientFramePaint);
         canvas.drawRect(bottomRect, gradientFramePaint);
