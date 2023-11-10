@@ -76,6 +76,7 @@ export async function generateOpenGraphImage({
   description = '',
   dir = 'ltr',
   bgGradient = [[0, 0, 0]],
+  bgImage,
   border: borderConfig = {},
   padding = 60,
   logo,
@@ -87,14 +88,18 @@ export async function generateOpenGraphImage({
   // Load and configure font families.
   const fontMgr = await fontManager.get(fonts);
   const loadedLogo = logo && (await loadImage(logo.path));
+  const loadedBg = bgImage && (await loadImage(bgImage.path));
 
   /** A deterministic hash based on inputs. */
+  const salt = Math.random();
   const hash = shorthash(
     deterministicString([
+      salt,
       title,
       description,
       dir,
       bgGradient,
+      bgImage,
       borderConfig,
       padding,
       logo,
@@ -102,6 +107,7 @@ export async function generateOpenGraphImage({
       fonts,
       quality,
       loadedLogo?.hash,
+      loadedBg?.hash,
       fonts.map((font) => fontManager.getHash(font)),
     ])
   );
@@ -155,6 +161,90 @@ export async function generateOpenGraphImage({
     )
   );
   canvas.drawRect(bgRect, bgPaint);
+
+  // Draw background image.
+  if (bgImage && loadedBg?.buffer) {
+    const bgImg = CanvasKit.MakeImageFromEncoded(loadedBg.buffer);
+    if (bgImg) {
+      if (!bgImage.margin) {
+        bgImage.margin = [0, 0, 0, 0];
+      }
+
+      const [bgTop, bgRight, bgBottom, bgLeft] = bgImage.margin;
+      const xMargin = bgRight + bgLeft;
+      const yMargin = bgTop + bgBottom;
+      const bgH = bgImg.height();
+      const bgW = bgImg.width();
+      let targetW, targetH, xRatio, yRatio;
+
+      if (bgW < bgH) {
+        targetW = width;
+        if (bgImage.crop) {
+          targetW -= xMargin;
+        }
+        targetH = ((targetW / bgW) * bgH);
+      } else {
+        targetH = height;
+        if (bgImage.crop) {
+          targetH -= yMargin;
+        }
+        targetW = ((targetH / bgH) * bgW);
+      }
+
+      //  if (bgImage.crop) {
+      //   targetW -= xMargin;
+      //    targetH -= yMargin;
+      //  }
+
+      xRatio = targetW / bgW;
+      yRatio = targetH / bgH;
+
+      //const cropRect = CanvasKit.XYWHRect(50, 50, width - 500, height - 500);
+      //const cropRectFull = CanvasKit.XYWHRect(0, 0, width, height);
+
+      //canvas.drawDRRect(bgRect,cropRect, bgePaint)
+
+      // Matrix transform to scale the logo to the desired size.
+      const bgImagePaint = new CanvasKit.Paint();
+      bgImagePaint.setImageFilter(
+        CanvasKit.ImageFilter.MakeMatrixTransform(
+          CanvasKit.Matrix.scaled(xRatio, yRatio),
+          { filter: CanvasKit.FilterMode.Linear },
+          null
+        )
+      );
+
+      canvas.drawImage(bgImg, bgLeft, bgTop, bgImagePaint);
+
+      if (bgImage.crop) {
+        const gradientFramePaint = new CanvasKit.Paint();
+        gradientFramePaint.setShader(
+          CanvasKit.Shader.MakeLinearGradient(
+            [0, 0],
+            [0, height],
+            bgGradient.map((rgb) => CanvasKit.Color(...rgb)),
+            null,
+            CanvasKit.TileMode.Clamp
+          )
+        );
+        const topRect = CanvasKit.XYWHRect(0, 0, width, bgTop);
+        const rightRect = CanvasKit.XYWHRect(width - bgRight, 0, bgRight, height);
+        const bottomRect = CanvasKit.XYWHRect(0, height - bgBottom, width, bgBottom);
+        const leftRect = CanvasKit.XYWHRect(0, 0, bgLeft, height);
+
+        canvas.drawRect(topRect, gradientFramePaint);
+        canvas.drawRect(rightRect, gradientFramePaint);
+        canvas.drawRect(bottomRect, gradientFramePaint);
+        canvas.drawRect(leftRect, gradientFramePaint);
+
+        //const bgePaint = new CanvasKit.Paint()
+        //canvas.drawRect(cropRectFull, bgePaint);
+        //bgePaint.setStyle(CanvasKit.PaintStyle.Stroke);
+        //canvas.clipRect(cropRect, CanvasKit.ClipOp.Difference, true)
+
+      }
+    }
+  }
 
   // Draw border.
   if (border.width) {

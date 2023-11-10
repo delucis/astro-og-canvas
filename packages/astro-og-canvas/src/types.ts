@@ -58,6 +58,17 @@ export interface OGImageOptions {
    * For a solid color, only include a single color, e.g. `[[0, 0, 0]]`
    */
   bgGradient?: RGBColor[];
+
+  /**
+   * Background Image
+   */
+  bgImage?: {
+    path: string;
+    /* IllogicalSide - top, right, bottom, left */
+    margin?: XYWH; 
+    crop?: boolean;
+  }
+
   /** Border config. Highlights a single edge of the image. */
   border?: {
     /** RGB border color, e.g. `[0, 255, 0]`. */
