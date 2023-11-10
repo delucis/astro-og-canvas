@@ -169,10 +169,10 @@ export async function generateOpenGraphImage({
       if (!bgImage.margin) {
         bgImage.margin = [0, 0, 0, 0];
       }
-      
+
       const [bgTop, bgRight, bgBottom, bgLeft] = bgImage.margin;
-      //const xMargin = bgRight + bgLeft;
-      //const yMargin = bgTop + bgBottom;
+      const xMargin = bgRight + bgLeft;
+      const yMargin = bgTop + bgBottom;
       const bgH = bgImg.height();
       const bgW = bgImg.width();
 
@@ -183,19 +183,25 @@ export async function generateOpenGraphImage({
       // w * x = 1200 --- h * x = 630
       // x = 1200 / 1920
       // 
+      let targetW = width;
+      let targetH = height;
+      if (!bgImage.crop) {
+        targetW -= xMargin;
+        targetH -= yMargin;
+        bgImage.size = "cover";
+      }
 
       if (bgImage.size == "cover") {
         if (ratio > 1) {
-          scaleRatio = width / bgW;
+          scaleRatio = targetW / bgW;
         } else {
-          scaleRatio = height / bgH;
+          scaleRatio = targetH / bgH;
         }
-
       } else if (bgImage.size == "contain") {
         if (ratio > 1) {
-          scaleRatio = height / bgH;
+          scaleRatio = targetH / bgH;
         } else {
-          scaleRatio = width / bgW;
+          scaleRatio = targetW / bgW;
         }
       }
 
@@ -213,8 +219,8 @@ export async function generateOpenGraphImage({
           null
         )
       );
-      bgImage.fill = true;
-      if (bgImage.fill) {
+
+      if (bgImage.crop) {
         canvas.drawImage(bgImg, 0, 0, bgImagePaint);
       } else {
         canvas.drawImage(bgImg, bgLeft, bgTop, bgImagePaint);

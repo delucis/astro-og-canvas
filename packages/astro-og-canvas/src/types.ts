@@ -67,17 +67,11 @@ export interface OGImageOptions {
     // defaults to original image size
     size?: "cover" | "contain" | undefined;
     /* top, right, bottom, left */
-    inset?: [number, number, number, number];
-
-
-    /* top, right, bottom, left */
-    // TODO: Use a proper type.
-    margin?: XYWH;
+    margin?: [number, number, number, number];
     crop?: boolean;
-    fill?: boolean;
+    
     // cover/contain
     // inset
-    // separted
   }
 
   /** Border config. Highlights a single edge of the image. */

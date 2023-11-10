@@ -16,6 +16,6 @@ export const { getStaticPaths, GET } = OGImageRoute({
       [0, 255, 0],
       [0, 0, 255],
     ],
-    bgImage: { path: './src/bgPattern.png', margin: [100, 50, 0, 50], crop: false },
+    bgImage: { path: './src/bgPattern.png', margin: [200, 200, 200, 200], crop: false },
   }),
 });
