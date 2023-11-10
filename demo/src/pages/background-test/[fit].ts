@@ -10,16 +10,19 @@ export const { getStaticPaths, GET } = OGImageRoute({
   },
   getImageOptions: (_path, page) => ({
     ...page,
-    logo: { path: './src/komodo.png', size: [350] },
-    border: { color: [100, 100, 100], width: 20, side: 'block-end' },
+    //logo: { path: './src/komodo.png', size: [350] },
+    //border: { color: [100, 100, 100], width: 20, side: 'block-end' },
     bgGradient: [
       [42, 35, 62],
       [23, 20, 36],
     ],
-    bgImage: { path: './src/bgPattern.png'},
-    padding: 60,
+    bgImage: { path: './src/bgPattern.png' },
+    //padding: 60,
     font: {
-      color: "black",
+      title: {
+        color: [0, 0, 0],
+      }
     },
   }),
 });
+

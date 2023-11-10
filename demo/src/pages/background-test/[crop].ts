@@ -19,7 +19,9 @@ export const { getStaticPaths, GET } = OGImageRoute({
     bgImage: { path: './src/bgPattern.png', margin: [100, 100, 100, 100], crop: true },
     padding: 60,
     font: {
-      color: "black",
+      title: {
+        color: [0, 0, 0],
+      }
     },
   }),
 });
