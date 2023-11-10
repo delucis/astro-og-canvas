@@ -64,9 +64,20 @@ export interface OGImageOptions {
    */
   bgImage?: {
     path: string;
-    /* IllogicalSide - top, right, bottom, left */
-    margin?: XYWH; 
+    // defaults to original image size
+    size?: "cover" | "contain" | undefined;
+    /* top, right, bottom, left */
+    inset?: [number, number, number, number];
+
+
+    /* top, right, bottom, left */
+    // TODO: Use a proper type.
+    margin?: XYWH;
     crop?: boolean;
+    fill?: boolean;
+    // cover/contain
+    // inset
+    // separted
   }
 
   /** Border config. Highlights a single edge of the image. */

@@ -169,14 +169,13 @@ export async function generateOpenGraphImage({
       if (!bgImage.margin) {
         bgImage.margin = [0, 0, 0, 0];
       }
-
+      
       const [bgTop, bgRight, bgBottom, bgLeft] = bgImage.margin;
       //const xMargin = bgRight + bgLeft;
       //const yMargin = bgTop + bgBottom;
       const bgH = bgImg.height();
       const bgW = bgImg.width();
 
-      let target;
       let scaleRatio = 1;
       const ratio = bgW / bgH;
       // w = 1920 h = 1080
@@ -185,33 +184,21 @@ export async function generateOpenGraphImage({
       // x = 1200 / 1920
       // 
 
-      if (bgImage.size == "contain") {
+      if (bgImage.size == "cover") {
         if (ratio > 1) {
-          target = height;
-          // if (bgImage.crop) {
-          //   targetW -= xMargin;
-          // }
           scaleRatio = width / bgW;
-
         } else {
-          target = width;
-          // if (bgImage.crop) {
-          //   targetH -= yMargin;
-          // }
           scaleRatio = height / bgH;
         }
 
-      } else if (bgImage.size == "cover") {
-
+      } else if (bgImage.size == "contain") {
+        if (ratio > 1) {
+          scaleRatio = height / bgH;
+        } else {
+          scaleRatio = width / bgW;
+        }
       }
 
-      //  if (bgImage.crop) {
-      //   targetW -= xMargin;
-      //    targetH -= yMargin;
-      //  }
-
-
-console.log("\n\n\nscaleRatio\n\n\n", scaleRatio, target)
       //const cropRect = CanvasKit.XYWHRect(50, 50, width - 500, height - 500);
       //const cropRectFull = CanvasKit.XYWHRect(0, 0, width, height);
 
@@ -254,12 +241,6 @@ console.log("\n\n\nscaleRatio\n\n\n", scaleRatio, target)
         canvas.drawRect(rightRect, gradientFramePaint);
         canvas.drawRect(bottomRect, gradientFramePaint);
         canvas.drawRect(leftRect, gradientFramePaint);
-
-        //const bgePaint = new CanvasKit.Paint()
-        //canvas.drawRect(cropRectFull, bgePaint);
-        //bgePaint.setStyle(CanvasKit.PaintStyle.Stroke);
-        //canvas.clipRect(cropRect, CanvasKit.ClipOp.Difference, true)
-
       }
     }
   }

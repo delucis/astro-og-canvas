@@ -1,9 +1,9 @@
 import { OGImageRoute } from 'astro-og-canvas';
 
 export const { getStaticPaths, GET } = OGImageRoute({
-  param: 'crop',
+  param: 'default',
   pages: {
-    'crop.md': {
+    'default.md': {
       title: '',
       description: '',
     },
@@ -16,6 +16,7 @@ export const { getStaticPaths, GET } = OGImageRoute({
       [0, 255, 0],
       [0, 0, 255],
     ],
-    bgImage: { path: './src/bgPattern.png', margin: [100, 100, 100, 100], crop: true },
+    bgImage: { path: './src/bgPattern.png' },
   }),
+
 });
