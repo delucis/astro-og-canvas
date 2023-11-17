@@ -61,6 +61,40 @@ pnpm i canvaskit-wasm
    });
    ```
 
+#### Generating `pages` from astro files
+
+If you want to generate images for every page.
+
+The following example assumes every page export an `og` object of type `OGImageOptions`.
+
+```ts
+// src/pages/api/og/[...route].ts
+
+import { OGImageRoute } from 'astro-og-canvas';
+
+export const { getStaticPaths, GET } = OGImageRoute({
+  param: 'route',
+  pages: await import.meta.glob('/src/pages/**/*.astro', { eager: true }),
+  getImageOptions: (_, page) => ({ ...page.og }),
+});
+```
+
+```ts
+// src/pages/index.astro
+
+---
+export const og: OGImageOptions = {
+  title: 'Example Page',
+  description: 'Description of this page shown in smaller text',
+  logo: { path: './src/astro-docs-logo.png', size: [350] },
+};
+---
+
+<Layout title="Welcome to Astro." description="Hellow world">
+ Some cool stuffs!
+</Layout>
+```
+
 #### Generating `pages` from a content collection
 
 If you want to generate images for every file in a content collection, use `getCollection()` to load your content entries and convert the entries array to an object.
