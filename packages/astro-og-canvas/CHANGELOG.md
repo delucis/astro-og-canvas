@@ -1,5 +1,11 @@
 # astro-og-canvas
 
+## 0.3.2
+
+### Patch Changes
+
+- 8416369: Update `deterministic-object-hash` from 1.3.1 to 2.0.2
+
 ## 0.3.1
 
 ### Patch Changes
