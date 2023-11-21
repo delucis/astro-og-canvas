@@ -212,9 +212,7 @@ export async function generateOpenGraphImage({
       // Draw image
       if (bgImage.crop) {
         canvas.drawImage(bgImg, 0, 0, bgImagePaint);
-
       } else {
-
         canvas.drawImage(bgImg, bgLeft, bgTop, bgImagePaint);
       }
 
