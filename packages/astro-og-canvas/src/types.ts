@@ -66,7 +66,7 @@ export interface OGImageOptions {
     path: string;
     // defaults to original image size
     size?: "cover" | "contain" | undefined;
-    /* top, right, bottom, left */
+    /* top, right, bottom, left | implies crop = true */
     margin?: [number, number, number, number];
     crop?: boolean;
     

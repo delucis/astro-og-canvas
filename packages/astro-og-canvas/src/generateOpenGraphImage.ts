@@ -168,25 +168,29 @@ export async function generateOpenGraphImage({
     if (bgImg) {
       if (!bgImage.margin) {
         bgImage.margin = [0, 0, 0, 0];
+      } else {
+        // if margin is defined, then imply crop
+        bgImage.crop = true
       }
 
+      // Define margins
       const [bgTop, bgRight, bgBottom, bgLeft] = bgImage.margin;
       const xMargin = bgRight + bgLeft;
       const yMargin = bgTop + bgBottom;
+
       const bgH = bgImg.height();
       const bgW = bgImg.width();
 
-      let scaleRatio = 1;
       const ratio = bgW / bgH;
-
+      let scaleRatio = 1;
       let targetW = width;
       let targetH = height;
+
       if (!bgImage.crop) {
         targetW -= xMargin;
         targetH -= yMargin;
-        bgImage.size = "contain";
       }
-
+      // "cover" scales the image so its smaller size fit the window, "contain" makes the bigger size fit to window
       if (bgImage.size == "cover") {
         scaleRatio = (ratio > 1 ? targetW / bgW : targetH / bgH);
       } else if (bgImage.size == "contain") {
@@ -208,7 +212,9 @@ export async function generateOpenGraphImage({
       // Draw image
       if (bgImage.crop) {
         canvas.drawImage(bgImg, 0, 0, bgImagePaint);
+
       } else {
+
         canvas.drawImage(bgImg, bgLeft, bgTop, bgImagePaint);
       }
 
@@ -224,6 +230,8 @@ export async function generateOpenGraphImage({
             CanvasKit.TileMode.Clamp
           )
         );
+
+        // Draw 4 gradients to make a frame over the image
         const topRect = CanvasKit.XYWHRect(0, 0, width, bgTop);
         const rightRect = CanvasKit.XYWHRect(width - bgRight, 0, bgRight, height);
         const bottomRect = CanvasKit.XYWHRect(0, height - bgBottom, width, bgBottom);
