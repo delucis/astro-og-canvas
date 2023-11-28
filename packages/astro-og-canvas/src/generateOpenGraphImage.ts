@@ -242,6 +242,14 @@ export async function generateOpenGraphImage({
     }
   }
 
+  // this somehow fix a problem where the logo was misplaced when utilized with background, probably because the canva was scaled down when the image was placed, and then when placing the logo the scale was off.
+  // TODO: Make sure this is the proper way.
+  CanvasKit.ImageFilter.MakeMatrixTransform(
+    CanvasKit.Matrix.scaled(1, 1),
+    { filter: CanvasKit.FilterMode.Linear },
+    null
+  )
+
   // Draw border.
   if (border.width) {
     const borderStyle = new CanvasKit.Paint();
