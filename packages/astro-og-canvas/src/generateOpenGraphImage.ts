@@ -162,6 +162,21 @@ export async function generateOpenGraphImage({
   );
   canvas.drawRect(bgRect, bgPaint);
 
+  // Draw border.
+  if (border.width) {
+    const borderStyle = new CanvasKit.Paint();
+    borderStyle.setStyle(CanvasKit.PaintStyle.Stroke);
+    borderStyle.setColor(CanvasKit.Color(...border.color));
+    borderStyle.setStrokeWidth(border.width * 2);
+    const borders: Record<LogicalSide, XYWH> = {
+      'block-start': edges.top,
+      'block-end': edges.bottom,
+      'inline-start': isRtl ? edges.right : edges.left,
+      'inline-end': isRtl ? edges.left : edges.right,
+    };
+    canvas.drawLine(...borders[border.side], borderStyle);
+  }
+
   // Draw background image.
   if (bgImage && loadedBg?.buffer) {
     const bgImg = CanvasKit.MakeImageFromEncoded(loadedBg.buffer);
@@ -200,21 +215,6 @@ export async function generateOpenGraphImage({
       const destRect = CanvasKit.XYWHRect(targetX, targetY, targetW, targetH);
       canvas.drawImageRect(bgImg, srcRect, destRect, new CanvasKit.Paint());
     }
-  }
-
-  // Draw border.
-  if (border.width) {
-    const borderStyle = new CanvasKit.Paint();
-    borderStyle.setStyle(CanvasKit.PaintStyle.Stroke);
-    borderStyle.setColor(CanvasKit.Color(...border.color));
-    borderStyle.setStrokeWidth(border.width * 2);
-    const borders: Record<LogicalSide, XYWH> = {
-      'block-start': edges.top,
-      'block-end': edges.bottom,
-      'inline-start': isRtl ? edges.right : edges.left,
-      'inline-end': isRtl ? edges.left : edges.right,
-    };
-    canvas.drawLine(...borders[border.side], borderStyle);
   }
 
   // Draw logo.
