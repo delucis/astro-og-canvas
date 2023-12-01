@@ -8,27 +8,58 @@ export const { getStaticPaths, GET } = OGImageRoute({
   pages: {
     'contain.md': {
       bgImage: { path: bgPath, fit: 'contain' },
-      title: '{ fit: "contain" }',
+      title: 'bgImage: { fit: "contain" }',
     },
     'cover.md': {
       bgImage: { path: bgPath, fit: 'cover' },
-      title: '{ fit: "cover" }',
+      title: 'bgImage: { fit: "cover" }',
     },
-    'crop.md': {
-      bgImage: { path: bgPath, margin: [100, 50, 0, 50], crop: true },
-      title: '{\n  margin: [100, 50, 0, 50],\n  crop: true,\n}',
-    },
-    'cropNcover.md': {
-      bgImage: { path: bgPath, margin: [100, 50, 0, 50], crop: true, fit: 'cover' },
-      title: '{\n  margin: [100, 50, 0, 50],\n  crop: true,\n  fit: "cover",\n}',
+    'fill.md': {
+      bgImage: { path: bgPath, fit: 'fill' },
+      title: 'bgImage: { fit: "fill" }',
     },
     'default.md': {
-      bgImage: { path: bgPath },
-      title: '{}',
+      bgImage: { path: bgPath, fit: 'none' },
+      title: 'bgImage: { fit: "none" }',
     },
-    'margin.md': {
-      bgImage: { path: bgPath, margin: [200, 200, 200, 200], crop: false },
-      title: '{\n  margin: [200, 200, 200, 200],\n  crop: false,\n}',
+    'logo-contain.md': {
+      bgImage: { path: logoPath, fit: 'contain' },
+      title: 'bgImage: { fit: "contain" }',
+      font: { title: { color: [0, 0, 0], weight: 'Bold' } },
+    },
+    'logo-cover.md': {
+      bgImage: { path: logoPath, fit: 'cover' },
+      title: 'bgImage: { fit: "cover" }',
+      font: { title: { color: [0, 0, 0], weight: 'Bold' } },
+    },
+    'logo-fill.md': {
+      bgImage: { path: logoPath, fit: 'fill' },
+      title: 'bgImage: { fit: "fill" }',
+      font: { title: { color: [0, 0, 0], weight: 'Bold' } },
+    },
+    'logo-default.md': {
+      bgImage: { path: logoPath, fit: 'none' },
+      title: 'bgImage: { fit: "none" }',
+      font: { title: { color: [0, 0, 0], weight: 'Bold' } },
+    },
+    'logo-start.md': {
+      bgImage: { path: logoPath, position: 'start' },
+      title: 'bgImage: { position: "start" }',
+      font: { title: { color: [0, 0, 0], weight: 'Bold' } },
+    },
+    'logo-end.md': {
+      bgImage: { path: logoPath, position: 'end' },
+      title: 'bgImage: { position: "end" }',
+      font: { title: { color: [0, 0, 0], weight: 'Bold' } },
+    },
+    'logo-center-end.md': {
+      bgImage: { path: logoPath, position: ['center', 'end'] },
+      title: 'bgImage: {\n  position: ["center", "end"],\n}',
+      font: { title: { color: [0, 0, 0], weight: 'Bold' } },
+    },
+    'logo-end-center.md': {
+      bgImage: { path: logoPath, position: ['end', 'center'] },
+      title: 'bgImage: {\n  position: ["end", "center"],\n}',
       font: { title: { color: [0, 0, 0], weight: 'Bold' } },
     },
   },

@@ -166,52 +166,41 @@ export async function generateOpenGraphImage({
   if (bgImage && loadedBg?.buffer) {
     const bgImg = CanvasKit.MakeImageFromEncoded(loadedBg.buffer);
     if (bgImg) {
-      if (!bgImage.margin) {
-        bgImage.margin = [0, 0, 0, 0];
+      let { position = 'center', fit = 'none' } = bgImage;
+      if (typeof position === 'string') position = [position, position];
+
+      const [bgW, bgH] = [bgImg.width(), bgImg.height()];
+      let [targetW, targetH] = [bgW, bgH];
+      if (fit === 'fill') {
+        [targetW, targetH] = [width, height];
+      } else if (fit === 'cover') {
+        const ratio = bgW / width < bgH / height ? width / bgW : height / bgH;
+        [targetW, targetH] = [bgW * ratio, bgH * ratio];
+      } else if (fit === 'contain') {
+        const ratio = bgW / width > bgH / height ? width / bgW : height / bgH;
+        [targetW, targetH] = [bgW * ratio, bgH * ratio];
       }
 
-      // Define margins
-      const [bgTop, bgRight, bgBottom, bgLeft] = bgImage.margin;
-      const xMargin = bgRight + bgLeft;
-      const yMargin = bgTop + bgBottom;
-
-      const bgH = bgImg.height();
-      const bgW = bgImg.width();
-
-      const ratio = bgW / bgH;
-      let scaleRatio = 1;
-      const targetW = width - xMargin;
-      const targetH = height - yMargin;
-
-      // "cover" scales the image so its smaller size fit the window, "contain" makes the bigger size fit to window
-      if (bgImage.fit === 'cover') {
-        scaleRatio = ratio > 1 ? targetW / bgW : targetH / bgH;
-      } else if (bgImage.fit === 'contain') {
-        scaleRatio = ratio > 1 ? targetH / bgH : targetW / bgW;
-      }
-
-      // Matrix transform to scale the background image to the desired size.
-      const bgImagePaint = new CanvasKit.Paint();
-      bgImagePaint.setImageFilter(
-        CanvasKit.ImageFilter.MakeMatrixTransform(
-          CanvasKit.Matrix.scaled(scaleRatio, scaleRatio),
-          { filter: CanvasKit.FilterMode.Linear },
-          null
-        )
-      );
+      const [blockAlign, inlineAlign] = position;
+      const targetX =
+        inlineAlign === 'start'
+          ? 0
+          : inlineAlign === 'end'
+          ? width - targetW
+          : (width - targetW) / 2;
+      const targetY =
+        blockAlign === 'start'
+          ? 0
+          : blockAlign === 'end'
+          ? height - targetH
+          : (height - targetH) / 2;
 
       // Draw image
-      canvas.drawImage(bgImg, bgLeft, bgTop, bgImagePaint);
+      const srcRect = CanvasKit.XYWHRect(0, 0, bgW, bgH);
+      const destRect = CanvasKit.XYWHRect(targetX, targetY, targetW, targetH);
+      canvas.drawImageRect(bgImg, srcRect, destRect, new CanvasKit.Paint());
     }
   }
-
-  // this somehow fix a problem where the logo was misplaced when utilized with background, probably because the canva was scaled down when the image was placed, and then when placing the logo the scale was off.
-  // TODO: Make sure this is the proper way.
-  CanvasKit.ImageFilter.MakeMatrixTransform(
-    CanvasKit.Matrix.scaled(1, 1),
-    { filter: CanvasKit.FilterMode.Linear },
-    null
-  );
 
   // Draw border.
   if (border.width) {

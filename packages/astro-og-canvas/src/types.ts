@@ -4,6 +4,7 @@ export type RGBColor = [r: number, g: number, b: number];
 export type XYWH = [x: number, y: number, w: number, h: number];
 export type LogicalSide = 'block-start' | 'inline-end' | 'block-end' | 'inline-start';
 export type IllogicalSide = 'top' | 'right' | 'bottom' | 'left';
+export type LogicalPosition = 'start' | 'center' | 'end';
 
 export interface FontConfig {
   /** RGB text color. Default: `[255, 255, 255]` */
@@ -64,13 +65,35 @@ export interface OGImageOptions {
    */
   bgImage?: {
     path: string;
-    // defaults to original image size
-    fit?: 'cover' | 'contain' | 'none';
-    /* top, right, bottom, left */
-    margin?: [number, number, number, number];
-
-    // cover/contain
-    // inset
+    /**
+     * How the background image should resize to fit the container.
+     *
+     * Default: `'none'`
+     *
+     * Options:
+     * - `'none'` — The image is displayed at original size even if that’s larger or smaller than the container
+     * - `'cover'` — The image is sized to maintain its aspect ratio while filling the entire container.
+     *   If the image’s aspect ratio does not match the aspect ratio of the container, then the image will be clipped to fit.
+     * - `'fill'` — The image is sized to fill the entire container.
+     *   If the image’s aspect ratio does not match the aspect ratio of the container, then the image will be stretched to fit.
+     * - `'contain'` — The image is scaled to maintain its aspect ratio while fitting within the container.
+     *   The image will be “letter-boxed” if its aspect ratio does not match the aspect ratio of the container.
+     */
+    fit?: 'cover' | 'contain' | 'none' | 'fill';
+    /**
+     * The position of the background image.
+     *
+     * Default: `'center'`
+     *
+     * The value is either a shorthand for both block and inline directions, e.g. `'center'`,
+     * or a tuple of `[blockPosition, inlinePosition]`, e.g. `['end', 'center']`.
+     *
+     * Examples:
+     * - `'start'` — place the image at the top-left (or top-right for RTL languages)
+     * - `'center'` (default) — center the image horizontally and vertically
+     * - `['start', 'end']` — place the image at the top
+     */
+    position?: LogicalPosition | [LogicalPosition, LogicalPosition];
   };
 
   /** Border config. Highlights a single edge of the image. */

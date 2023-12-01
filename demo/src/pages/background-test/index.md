@@ -9,12 +9,18 @@ layout: ../../layouts/Layout.astro
 This test loads a background image with various settings.
 
 <div class="grid">
-  <img alt="Example image" src="/background-test/contain.png">
-  <img alt="Example image" src="/background-test/cover.png">
-  <img alt="Example image" src="/background-test/crop.png">
-  <img alt="Example image" src="/background-test/cropNcover.png">
   <img alt="Example image" src="/background-test/default.png">
-  <img alt="Example image" src="/background-test/margin.png">
+  <img alt="Example image" src="/background-test/cover.png">
+  <img alt="Example image" src="/background-test/fill.png">
+  <img alt="Example image" src="/background-test/contain.png">
+  <img alt="Example image" src="/background-test/logo-default.png">
+  <img alt="Example image" src="/background-test/logo-cover.png">
+  <img alt="Example image" src="/background-test/logo-fill.png">
+  <img alt="Example image" src="/background-test/logo-contain.png">
+  <img alt="Example image" src="/background-test/logo-start.png">
+  <img alt="Example image" src="/background-test/logo-end.png">
+  <img alt="Example image" src="/background-test/logo-center-end.png">
+  <img alt="Example image" src="/background-test/logo-end-center.png">
 </div>
 
 - [Home](/)
