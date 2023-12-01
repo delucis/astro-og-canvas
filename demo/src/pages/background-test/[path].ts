@@ -1,6 +1,6 @@
 import { OGImageRoute } from 'astro-og-canvas';
 
-const logoPath = './src/komodo.png';
+const logoPath = './src/astro-docs-logo.png';
 const bgPath = './src/bgPattern.png';
 
 export const { getStaticPaths, GET } = OGImageRoute({
