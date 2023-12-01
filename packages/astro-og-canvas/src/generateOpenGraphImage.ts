@@ -168,9 +168,6 @@ export async function generateOpenGraphImage({
     if (bgImg) {
       if (!bgImage.margin) {
         bgImage.margin = [0, 0, 0, 0];
-      } else {
-        // if margin is defined, then imply crop
-        bgImage.crop = true;
       }
 
       // Define margins
@@ -183,13 +180,9 @@ export async function generateOpenGraphImage({
 
       const ratio = bgW / bgH;
       let scaleRatio = 1;
-      let targetW = width;
-      let targetH = height;
+      const targetW = width - xMargin;
+      const targetH = height - yMargin;
 
-      if (!bgImage.crop) {
-        targetW -= xMargin;
-        targetH -= yMargin;
-      }
       // "cover" scales the image so its smaller size fit the window, "contain" makes the bigger size fit to window
       if (bgImage.size == 'cover') {
         scaleRatio = ratio > 1 ? targetW / bgW : targetH / bgH;
@@ -208,35 +201,7 @@ export async function generateOpenGraphImage({
       );
 
       // Draw image
-      if (bgImage.crop) {
-        canvas.drawImage(bgImg, 0, 0, bgImagePaint);
-      } else {
-        canvas.drawImage(bgImg, bgLeft, bgTop, bgImagePaint);
-      }
-
-      // Redraw gradient
-      if (bgImage.crop) {
-        const gradientFramePaint = new CanvasKit.Paint();
-        gradientFramePaint.setShader(
-          CanvasKit.Shader.MakeLinearGradient(
-            [0, 0],
-            [0, height],
-            bgGradient.map((rgb) => CanvasKit.Color(...rgb)),
-            null,
-            CanvasKit.TileMode.Clamp
-          )
-        );
-
-        // Draw 4 gradients to make a frame over the image
-        const topRect = CanvasKit.XYWHRect(0, 0, width, bgTop);
-        const rightRect = CanvasKit.XYWHRect(width - bgRight, 0, bgRight, height);
-        const bottomRect = CanvasKit.XYWHRect(0, height - bgBottom, width, bgBottom);
-        const leftRect = CanvasKit.XYWHRect(0, 0, bgLeft, height);
-        canvas.drawRect(topRect, gradientFramePaint);
-        canvas.drawRect(rightRect, gradientFramePaint);
-        canvas.drawRect(bottomRect, gradientFramePaint);
-        canvas.drawRect(leftRect, gradientFramePaint);
-      }
+      canvas.drawImage(bgImg, bgLeft, bgTop, bgImagePaint);
     }
   }
 
