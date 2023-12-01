@@ -197,7 +197,7 @@ export async function generateOpenGraphImage({
         scaleRatio = ratio > 1 ? targetH / bgH : targetW / bgW;
       }
 
-      // Matrix transform to scale the logo to the desired size.
+      // Matrix transform to scale the background image to the desired size.
       const bgImagePaint = new CanvasKit.Paint();
       bgImagePaint.setImageFilter(
         CanvasKit.ImageFilter.MakeMatrixTransform(
