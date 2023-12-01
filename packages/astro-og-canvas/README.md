@@ -193,6 +193,23 @@ export interface OGImageOptions {
     side?: LogicalSide;
   };
 
+  /** Optional background image. */
+  bgImage?: {
+    /** Path to the background image file, e.g. `'./src/background.png'`. */
+    path: string;
+
+    /** How the background image should resize to fit the container. (Default: `'none'`) */
+    fit?: 'cover' | 'contain' | 'none' | 'fill';
+
+    /**
+     * How the background image should be positioned in the container. (Default: `'center'`)
+     *
+     * The value is either a shorthand for both block and inline directions, e.g. `'center'`,
+     * or a tuple of `[blockPosition, inlinePosition]`, e.g. `['end', 'center']`.
+     */
+    position?: LogicalPosition | [LogicalPosition, LogicalPosition];
+  };
+
   /** Amount of padding between the image edge and text. Default: `60`. */
   padding?: number;
 

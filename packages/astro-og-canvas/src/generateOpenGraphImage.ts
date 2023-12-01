@@ -76,6 +76,7 @@ export async function generateOpenGraphImage({
   description = '',
   dir = 'ltr',
   bgGradient = [[0, 0, 0]],
+  bgImage,
   border: borderConfig = {},
   padding = 60,
   logo,
@@ -87,6 +88,7 @@ export async function generateOpenGraphImage({
   // Load and configure font families.
   const fontMgr = await fontManager.get(fonts);
   const loadedLogo = logo && (await loadImage(logo.path));
+  const loadedBg = bgImage && (await loadImage(bgImage.path));
 
   /** A deterministic hash based on inputs. */
   const hash = shorthash(
@@ -95,6 +97,7 @@ export async function generateOpenGraphImage({
       description,
       dir,
       bgGradient,
+      bgImage,
       borderConfig,
       padding,
       logo,
@@ -102,6 +105,7 @@ export async function generateOpenGraphImage({
       fonts,
       quality,
       loadedLogo?.hash,
+      loadedBg?.hash,
       fonts.map((font) => fontManager.getHash(font)),
     ])
   );
@@ -169,6 +173,46 @@ export async function generateOpenGraphImage({
       'inline-end': isRtl ? edges.left : edges.right,
     };
     canvas.drawLine(...borders[border.side], borderStyle);
+  }
+
+  // Draw background image.
+  if (bgImage && loadedBg?.buffer) {
+    const bgImg = CanvasKit.MakeImageFromEncoded(loadedBg.buffer);
+    if (bgImg) {
+      let { position = 'center', fit = 'none' } = bgImage;
+      if (typeof position === 'string') position = [position, position];
+
+      const [bgW, bgH] = [bgImg.width(), bgImg.height()];
+      let [targetW, targetH] = [bgW, bgH];
+      if (fit === 'fill') {
+        [targetW, targetH] = [width, height];
+      } else if (fit === 'cover') {
+        const ratio = bgW / width < bgH / height ? width / bgW : height / bgH;
+        [targetW, targetH] = [bgW * ratio, bgH * ratio];
+      } else if (fit === 'contain') {
+        const ratio = bgW / width > bgH / height ? width / bgW : height / bgH;
+        [targetW, targetH] = [bgW * ratio, bgH * ratio];
+      }
+
+      const [blockAlign, inlineAlign] = position;
+      const targetX =
+        inlineAlign === 'start'
+          ? 0
+          : inlineAlign === 'end'
+          ? width - targetW
+          : (width - targetW) / 2;
+      const targetY =
+        blockAlign === 'start'
+          ? 0
+          : blockAlign === 'end'
+          ? height - targetH
+          : (height - targetH) / 2;
+
+      // Draw image
+      const srcRect = CanvasKit.XYWHRect(0, 0, bgW, bgH);
+      const destRect = CanvasKit.XYWHRect(targetX, targetY, targetW, targetH);
+      canvas.drawImageRect(bgImg, srcRect, destRect, new CanvasKit.Paint());
+    }
   }
 
   // Draw logo.
