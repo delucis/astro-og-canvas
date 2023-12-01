@@ -65,14 +65,14 @@ export interface OGImageOptions {
   bgImage?: {
     path: string;
     // defaults to original image size
-    size?: "cover" | "contain" | undefined;
+    size?: 'cover' | 'contain' | undefined;
     /* top, right, bottom, left | implies crop = true */
     margin?: [number, number, number, number];
     crop?: boolean;
-    
+
     // cover/contain
     // inset
-  }
+  };
 
   /** Border config. Highlights a single edge of the image. */
   border?: {

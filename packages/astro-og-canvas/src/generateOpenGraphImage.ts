@@ -55,7 +55,7 @@ class ImageCache {
     try {
       await fs.mkdir(dir, { recursive: true });
       this.#dirCache.add(dir);
-    } catch { }
+    } catch {}
   }
   /** Retrieve an image from the file system cache if it exists. */
   async get(cachePath: string): Promise<Buffer | undefined> {
@@ -170,7 +170,7 @@ export async function generateOpenGraphImage({
         bgImage.margin = [0, 0, 0, 0];
       } else {
         // if margin is defined, then imply crop
-        bgImage.crop = true
+        bgImage.crop = true;
       }
 
       // Define margins
@@ -191,10 +191,10 @@ export async function generateOpenGraphImage({
         targetH -= yMargin;
       }
       // "cover" scales the image so its smaller size fit the window, "contain" makes the bigger size fit to window
-      if (bgImage.size == "cover") {
-        scaleRatio = (ratio > 1 ? targetW / bgW : targetH / bgH);
-      } else if (bgImage.size == "contain") {
-        scaleRatio = (ratio > 1 ? targetH / bgH : targetW / bgW);
+      if (bgImage.size == 'cover') {
+        scaleRatio = ratio > 1 ? targetW / bgW : targetH / bgH;
+      } else if (bgImage.size == 'contain') {
+        scaleRatio = ratio > 1 ? targetH / bgH : targetW / bgW;
       }
 
       // Matrix transform to scale the logo to the desired size.
@@ -206,8 +206,6 @@ export async function generateOpenGraphImage({
           null
         )
       );
-
-
 
       // Draw image
       if (bgImage.crop) {
@@ -248,7 +246,7 @@ export async function generateOpenGraphImage({
     CanvasKit.Matrix.scaled(1, 1),
     { filter: CanvasKit.FilterMode.Linear },
     null
-  )
+  );
 
   // Draw border.
   if (border.width) {
