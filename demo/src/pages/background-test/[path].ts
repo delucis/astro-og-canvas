@@ -7,20 +7,20 @@ export const { getStaticPaths, GET } = OGImageRoute({
   param: 'path',
   pages: {
     'contain.md': {
-      bgImage: { path: bgPath, size: 'contain' },
-      title: '{ size: "contain" }',
+      bgImage: { path: bgPath, fit: 'contain' },
+      title: '{ fit: "contain" }',
     },
     'cover.md': {
-      bgImage: { path: bgPath, size: 'cover' },
-      title: '{ size: "cover" }',
+      bgImage: { path: bgPath, fit: 'cover' },
+      title: '{ fit: "cover" }',
     },
     'crop.md': {
       bgImage: { path: bgPath, margin: [100, 50, 0, 50], crop: true },
       title: '{\n  margin: [100, 50, 0, 50],\n  crop: true,\n}',
     },
     'cropNcover.md': {
-      bgImage: { path: bgPath, margin: [100, 50, 0, 50], crop: true, size: 'cover' },
-      title: '{\n  margin: [100, 50, 0, 50],\n  crop: true,\n  size: "cover",\n}',
+      bgImage: { path: bgPath, margin: [100, 50, 0, 50], crop: true, fit: 'cover' },
+      title: '{\n  margin: [100, 50, 0, 50],\n  crop: true,\n  fit: "cover",\n}',
     },
     'default.md': {
       bgImage: { path: bgPath },

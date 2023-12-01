@@ -184,9 +184,9 @@ export async function generateOpenGraphImage({
       const targetH = height - yMargin;
 
       // "cover" scales the image so its smaller size fit the window, "contain" makes the bigger size fit to window
-      if (bgImage.size == 'cover') {
+      if (bgImage.fit === 'cover') {
         scaleRatio = ratio > 1 ? targetW / bgW : targetH / bgH;
-      } else if (bgImage.size == 'contain') {
+      } else if (bgImage.fit === 'contain') {
         scaleRatio = ratio > 1 ? targetH / bgH : targetW / bgW;
       }
 

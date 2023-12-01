@@ -65,7 +65,7 @@ export interface OGImageOptions {
   bgImage?: {
     path: string;
     // defaults to original image size
-    size?: 'cover' | 'contain' | undefined;
+    fit?: 'cover' | 'contain' | 'none';
     /* top, right, bottom, left */
     margin?: [number, number, number, number];
 
