@@ -1,5 +1,11 @@
 # astro-og-canvas
 
+## 0.4.0
+
+### Minor Changes
+
+- c9b3dc9: Adds support for rendering a background image
+
 ## 0.3.2
 
 ### Patch Changes
