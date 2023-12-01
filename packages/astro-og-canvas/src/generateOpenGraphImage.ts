@@ -91,10 +91,8 @@ export async function generateOpenGraphImage({
   const loadedBg = bgImage && (await loadImage(bgImage.path));
 
   /** A deterministic hash based on inputs. */
-  const salt = Math.random();
   const hash = shorthash(
     deterministicString([
-      salt,
       title,
       description,
       dir,
