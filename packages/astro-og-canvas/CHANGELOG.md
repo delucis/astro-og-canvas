@@ -1,5 +1,11 @@
 # astro-og-canvas
 
+## 0.4.1
+
+### Patch Changes
+
+- 0cbcfa3: Support Astro v4
+
 ## 0.4.0
 
 ### Minor Changes
