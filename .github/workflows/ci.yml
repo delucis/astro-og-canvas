@@ -16,6 +16,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
+        astro: [^3, ^4]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
@@ -29,6 +30,12 @@ jobs:
 
       - name: Install Dependencies
         run: npm ci
+
+      - run: npm i astro@${{ matrix.astro }}
+      - run: npm i astro@${{ matrix.astro }}
+        working-directory: packages.astro-og-canvas
+      - run: npm i astro@${{ matrix.astro }}
+        working-directory: demo
 
       - name: Test
         run: npm t
