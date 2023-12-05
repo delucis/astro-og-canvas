@@ -33,7 +33,7 @@ jobs:
 
       - run: npm i astro@${{ matrix.astro }}
       - run: npm i astro@${{ matrix.astro }}
-        working-directory: packages.astro-og-canvas
+        working-directory: packages/astro-og-canvas
       - run: npm i astro@${{ matrix.astro }}
         working-directory: demo
 
