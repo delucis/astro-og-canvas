@@ -1,5 +1,11 @@
 # astro-og-canvas
 
+## 0.4.2
+
+### Patch Changes
+
+- be0c969: Adds missing comma in README
+
 ## 0.4.1
 
 ### Patch Changes
