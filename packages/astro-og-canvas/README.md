@@ -47,7 +47,7 @@ pnpm i canvaskit-wasm
         title: 'Example Page',
         description: 'Description of this page shown in smaller text',
       }
-     }
+     },
 
      // For each page, this callback will be used to customize the OpenGraph image.
      getImageOptions: (path, page) => ({
