@@ -1,7 +1,7 @@
 {
   "name": "astro-og-canvas",
   "description": "Generate OpenGraph images for your Astro site",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "type": "module",
   "types": "./dist/index.d.ts",
   "author": "Chris Swithinbank <swithinbank@gmail.com> (http://chrisswithinbank.net/)",
