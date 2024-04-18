@@ -1,5 +1,4 @@
-import type { FontMgr } from 'canvaskit-wasm';
-import init from 'canvaskit-wasm';
+import init, { type FontMgr } from 'canvaskit-wasm/full';
 import fs from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { shorthash } from './shorthash';
@@ -11,7 +10,7 @@ const error = (...args: any[]) => console.error('[astro-og-canvas]', ...args);
 /** CanvasKit singleton. */
 export const CanvasKitPromise = init({
   // TODO: Figure how to reliably resolve this without depending on Node.
-  locateFile: (file) => resolve(`canvaskit-wasm/bin/${file}`),
+  locateFile: (file) => resolve(`canvaskit-wasm/bin/full/${file}`),
 });
 
 class FontManager {

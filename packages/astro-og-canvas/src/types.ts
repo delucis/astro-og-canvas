@@ -1,4 +1,4 @@
-import type { CanvasKit } from 'canvaskit-wasm';
+import type { CanvasKit } from 'canvaskit-wasm/full';
 
 export type RGBColor = [r: number, g: number, b: number];
 export type XYWH = [x: number, y: number, w: number, h: number];
