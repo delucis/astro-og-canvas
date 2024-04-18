@@ -35,7 +35,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "canvaskit-wasm": "^0.37.0",
+    "canvaskit-wasm": "^0.39.1",
     "deterministic-object-hash": "^2.0.2",
     "entities": "^4.4.0"
   },
