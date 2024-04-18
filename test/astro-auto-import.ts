@@ -21,4 +21,9 @@ test('it should have built the index page correctly', () => {
   assert.match(page, /<img src="\/og\/index.png" alt="Example image">/);
 });
 
+test('it should have rendered a JPEG correctly', () => {
+  const buff = loadImage('/formats/jpeg.jpeg');
+  assert.not.equal(buff.length, 0);
+})
+
 test.run();
