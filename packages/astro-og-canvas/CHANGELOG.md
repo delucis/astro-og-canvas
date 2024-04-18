@@ -1,5 +1,18 @@
 # astro-og-canvas
 
+## 0.5.0
+
+### Minor Changes
+
+- e66e580: Switches to using the “full” `canvaskit-wasm` build to generate images. This fixes support for rendering as JPEG or WEBP instead of the default PNG.
+- e66e580: Updates `canvaskit-wasm` to the latest release
+
+  **Note:** pnpm users may need to manually update in their project too:
+
+  ```sh
+  pnpm i canvaskit-wasm@^0.39.1
+  ```
+
 ## 0.4.2
 
 ### Patch Changes
