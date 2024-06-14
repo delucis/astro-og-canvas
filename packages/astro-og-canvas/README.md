@@ -98,6 +98,10 @@ In the following example, every Markdown file in the project’s `src/pages/` di
 import { OGImageRoute } from 'astro-og-canvas';
 
 export const { getStaticPaths, GET } = OGImageRoute({
+  // Tell us the name of your dynamic route segment.
+  // In this case it’s `route`, because the file is named `[...route].ts`.
+  param: 'route',
+
   // Pass the glob result to pages
   pages: await import.meta.glob('/src/pages/**/*.md', { eager: true }),
 
