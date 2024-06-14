@@ -1,5 +1,11 @@
 # astro-og-canvas
 
+## 0.5.1
+
+### Patch Changes
+
+- c7d3a7a: Improves README
+
 ## 0.5.0
 
 ### Minor Changes
