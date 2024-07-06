@@ -2,4 +2,4 @@
 'astro-og-canvas': patch
 ---
 
-Fix invalid images generation for some slugs with leading slash
+Fixes image generation for slugs with a leading slash in Astro ≥4.10.2
