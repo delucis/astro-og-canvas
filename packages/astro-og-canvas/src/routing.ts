@@ -25,7 +25,8 @@ function createOGImageEndpoint({ getSlug = pathToSlug, ...opts }: OGImageRouteCo
   return async function getOGImage({ params }) {
     const pageEntry = Object.entries(opts.pages).find(
       (page) => {
-        return getSlug(...page) === params[opts.param] || getSlug(...page).replace(/^\//g, "") === params[opts.param]
+        const slug = getSlug(...page);
+        return slug === params[opts.param] || slug.replace(/^\//, "") === params[opts.param]
       }
     );
     if (!pageEntry) return new Response('Page not found', { status: 404 });
