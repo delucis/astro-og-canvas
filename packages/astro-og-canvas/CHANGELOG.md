@@ -1,5 +1,11 @@
 # astro-og-canvas
 
+## 0.5.2
+
+### Patch Changes
+
+- 9fec927: Fixes image generation for slugs with a leading slash in Astro ≥4.10.2
+
 ## 0.5.1
 
 ### Patch Changes
