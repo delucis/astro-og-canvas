@@ -24,7 +24,9 @@ function makeGetStaticPaths({
 function createOGImageEndpoint({ getSlug = pathToSlug, ...opts }: OGImageRouteConfig): APIRoute {
   return async function getOGImage({ params }) {
     const pageEntry = Object.entries(opts.pages).find(
-      (page) => getSlug(...page) === params[opts.param]
+      (page) => {
+        return getSlug(...page) === params[opts.param] || getSlug(...page).replace(/^\//g, "") === params[opts.param]
+      }
     );
     if (!pageEntry) return new Response('Page not found', { status: 404 });
 
