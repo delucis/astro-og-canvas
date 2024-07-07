@@ -1,4 +1,4 @@
-import init, { type FontMgr } from 'canvaskit-wasm/full';
+import type { FontMgr, CanvasKit } from 'canvaskit-wasm/full';
 import fs from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { shorthash } from './shorthash';
@@ -8,10 +8,31 @@ const debug = (...args: any[]) => console.debug('[astro-og-canvas]', ...args);
 const error = (...args: any[]) => console.error('[astro-og-canvas]', ...args);
 
 /** CanvasKit singleton. */
-export const CanvasKitPromise = init({
-  // TODO: Figure how to reliably resolve this without depending on Node.
-  locateFile: (file) => resolve(`canvaskit-wasm/bin/full/${file}`),
-});
+let canvasKitSingleton: CanvasKit;
+export async function getCanvasKit() {
+  if (!canvasKitSingleton) {
+    try {
+      const { default: init } = await import('canvaskit-wasm/full');
+      canvasKitSingleton = await init({
+        // TODO: Figure how to reliably resolve this without depending on Node.
+        locateFile: (file) => resolve(`canvaskit-wasm/bin/full/${file}`),
+      });
+    } catch (e) {
+      throw formatCanvasKitInitError(e);
+    }
+  }
+  return canvasKitSingleton;
+}
+
+function formatCanvasKitInitError(e: unknown) {
+  if (e instanceof Error && e.message.includes('__dirname is not defined')) {
+    e.message +=
+      '\n\n' +
+      'This error is often thrown when using PNPM without installing `canvaskit-wasm` directly.\n' +
+      'Install this required dependency by running `pnpm add canvaskit-wasm`\n';
+  }
+  return e;
+}
 
 class FontManager {
   /** Font data cache to avoid repeat downloads. */
@@ -24,7 +45,7 @@ class FontManager {
 
   /** Instantiate a new `CanvasKit.FontMgr` instance with all the currently cached fonts. */
   async #updateManager(): Promise<void> {
-    const CanvasKit = await CanvasKitPromise;
+    const CanvasKit = await getCanvasKit();
     const fontData = Array.from(this.#cache.values()).filter((v) => !!v) as ArrayBuffer[];
     this.#manager = CanvasKit.FontMgr.FromData(...fontData)!;
 
