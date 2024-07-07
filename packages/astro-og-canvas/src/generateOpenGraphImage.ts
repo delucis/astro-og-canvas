@@ -2,7 +2,7 @@ import { deterministicString } from 'deterministic-object-hash';
 import { decodeHTMLStrict } from 'entities';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { CanvasKitPromise, fontManager, loadImage } from './assetLoaders';
+import { getCanvasKit, fontManager, loadImage } from './assetLoaders';
 import { shorthash } from './shorthash';
 import type {
   FontConfig,
@@ -132,7 +132,7 @@ export async function generateOpenGraphImage({
   };
   margin[border.side] += border.width;
 
-  const CanvasKit = await CanvasKitPromise;
+  const CanvasKit = await getCanvasKit();
 
   const textStyle = (fontConfig: Required<FontConfig>) => ({
     color: CanvasKit.Color(...fontConfig.color),
