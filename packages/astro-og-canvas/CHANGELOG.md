@@ -1,5 +1,11 @@
 # astro-og-canvas
 
+## 0.5.3
+
+### Patch Changes
+
+- 0bea94b: Refactors CanvasKit initialization to log more helpful error in PNPM projects without `canvaskit-wasm` installed
+
 ## 0.5.2
 
 ### Patch Changes
