@@ -2,6 +2,7 @@ import { deterministicString } from 'deterministic-object-hash';
 import { decodeHTMLStrict } from 'entities';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { Buffer } from 'node:buffer';
 import { getCanvasKit, fontManager, loadImage } from './assetLoaders';
 import { shorthash } from './shorthash';
 import type {
