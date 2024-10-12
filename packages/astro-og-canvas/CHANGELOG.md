@@ -1,5 +1,11 @@
 # astro-og-canvas
 
+## 0.5.4
+
+### Patch Changes
+
+- 252e840: Adds an explicit `Buffer` import for Deno compatibility
+
 ## 0.5.3
 
 ### Patch Changes
