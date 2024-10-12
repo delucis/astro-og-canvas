@@ -1,6 +1,7 @@
 import type { FontMgr, CanvasKit } from 'canvaskit-wasm/full';
 import fs from 'node:fs/promises';
 import { createRequire } from 'node:module';
+import { Buffer } from 'node:buffer';
 import { shorthash } from './shorthash';
 const { resolve } = createRequire(import.meta.url);
 
