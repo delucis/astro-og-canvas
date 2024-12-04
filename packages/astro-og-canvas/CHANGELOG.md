@@ -1,5 +1,11 @@
 # astro-og-canvas
 
+## 0.5.5
+
+### Patch Changes
+
+- ceeecc1: Expands peer dependencies to support Astro v5
+
 ## 0.5.4
 
 ### Patch Changes
