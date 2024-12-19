@@ -9,6 +9,6 @@
     "preview": "astro preview"
   },
   "devDependencies": {
-    "astro": "^4.16.17"
+    "astro": "^4.16.18"
   }
 }
