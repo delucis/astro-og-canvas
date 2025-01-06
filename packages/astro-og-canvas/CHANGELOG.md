@@ -1,5 +1,11 @@
 # astro-og-canvas
 
+## 0.5.6
+
+### Patch Changes
+
+- bb13312: Fixes a README code example
+
 ## 0.5.5
 
 ### Patch Changes
