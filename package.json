@@ -5,7 +5,8 @@
   "scripts": {
     "build:demo": "pnpm --filter \"@demo/astro-og-canvas\" build",
     "prepublish": "pnpm --filter \"astro-og-canvas\" build",
-    "test": "pnpm build:demo && tsm node_modules/uvu/bin.js test"
+    "pretest": "pnpm prepublish && pnpm build:demo",
+    "test": "tsm node_modules/uvu/bin.js test"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.6",
