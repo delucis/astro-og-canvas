@@ -12,7 +12,7 @@ This project uses **workspaces** to develop a single package from `packages/astr
 
 All commands are run from the root of the project, from a terminal:
 
-| Command       | Action                |
-| :------------ | :-------------------- |
-| `npm install` | Installs dependencies |
-| `npm test`    | Run unit tests        |
+| Command        | Action                |
+| :------------- | :-------------------- |
+| `pnpm install` | Installs dependencies |
+| `pnpm test`    | Run unit tests        |
