@@ -9,6 +9,7 @@
     "preview": "astro preview"
   },
   "devDependencies": {
-    "astro": "^4.16.18"
+    "astro": "^4.16.18",
+    "astro-og-canvas": "workspace:*"
   }
 }

@@ -32,6 +32,9 @@ importers:
       astro:
         specifier: ^4.16.18
         version: 4.16.18(@types/node@16.11.62)(rollup@4.28.1)(typescript@5.0.4)
+      astro-og-canvas:
+        specifier: workspace:*
+        version: link:../packages/astro-og-canvas
 
   packages/astro-og-canvas:
     dependencies:
