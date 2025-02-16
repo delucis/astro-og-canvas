@@ -35,6 +35,9 @@ importers:
       astro-og-canvas:
         specifier: workspace:*
         version: link:../packages/astro-og-canvas
+      canvaskit-wasm:
+        specifier: ^0.39.1
+        version: 0.39.1
 
   packages/astro-og-canvas:
     dependencies:
