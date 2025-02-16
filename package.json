@@ -2,14 +2,10 @@
   "name": "@root/astro-og-canvas",
   "version": "0.0.1",
   "private": true,
-  "workspaces": [
-    "demo",
-    "packages/**/*"
-  ],
   "scripts": {
-    "build:demo": "npm run build --workspace=demo",
-    "prepublish": "npm run build --workspace=astro-og-canvas",
-    "test": "npm run build:demo && tsm node_modules/uvu/bin.js test"
+    "build:demo": "pnpm --filter \"@demo/astro-og-canvas\" build",
+    "prepublish": "pnpm --filter \"astro-og-canvas\" build",
+    "test": "pnpm build:demo && tsm node_modules/uvu/bin.js test"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.6",
@@ -18,5 +14,6 @@
     "tsm": "^2.3.0",
     "typescript": "^5.0.0",
     "uvu": "^0.5.6"
-  }
+  },
+  "packageManager": "pnpm@9.15.1+sha512.1acb565e6193efbebda772702950469150cf12bcc764262e7587e71d19dc98a423dff9536e57ea44c49bdf790ff694e83c27be5faa23d67e0c033b583be4bfcf"
 }
