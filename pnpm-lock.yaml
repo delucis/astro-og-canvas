@@ -35,9 +35,6 @@ importers:
       astro-og-canvas:
         specifier: workspace:*
         version: link:../packages/astro-og-canvas
-      canvaskit-wasm:
-        specifier: ^0.39.1
-        version: 0.39.1
 
   packages/astro-og-canvas:
     dependencies:
@@ -3352,7 +3349,7 @@ snapshots:
       unist-util-visit: 5.0.0
       vfile: 6.0.3
       vite: 5.4.11(@types/node@16.11.62)
-      vitefu: 1.0.4(vite@5.4.11)
+      vitefu: 1.0.4(vite@5.4.11(@types/node@16.11.62))
       which-pm: 3.0.0
       xxhash-wasm: 1.1.0
       yargs-parser: 21.1.1
@@ -5310,7 +5307,7 @@ snapshots:
       '@types/node': 16.11.62
       fsevents: 2.3.3
 
-  vitefu@1.0.4(vite@5.4.11):
+  vitefu@1.0.4(vite@5.4.11(@types/node@16.11.62)):
     optionalDependencies:
       vite: 5.4.11(@types/node@16.11.62)
 
