@@ -8,12 +8,6 @@ This package provides utlities to generate OpenGraph images for the pages on you
 npm i astro-og-canvas
 ```
 
-**Using `pnpm`?** `pnpm` users will also need to install `canvaskit-wasm` as a direct dependency:
-
-```shell
-pnpm i canvaskit-wasm
-```
-
 ## Version compatibility
 
 | astro  | astro-og-canvas                                                                               |
