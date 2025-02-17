@@ -22,22 +22,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v3
-
       - name: Setup Node.js 18.x
         uses: actions/setup-node@v4
         with:
           node-version: 18.x
-          cache: pnpm
+          cache: npm
 
       - name: Install Dependencies
-        run: pnpm i
+        run: npm ci
 
-      - run: pnpm i --workspace-root astro@${{ matrix.astro }}
-      - run: pnpm i astro@${{ matrix.astro }}
+      - run: npm i astro@${{ matrix.astro }}
+      - run: npm i astro@${{ matrix.astro }}
         working-directory: packages/astro-og-canvas
-      - run: pnpm i astro@${{ matrix.astro }}
+      - run: npm i astro@${{ matrix.astro }}
         working-directory: demo
 
       - name: Test
-        run: pnpm t
+        run: npm t
