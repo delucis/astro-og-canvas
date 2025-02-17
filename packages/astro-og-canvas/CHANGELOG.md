@@ -1,5 +1,11 @@
 # astro-og-canvas
 
+## 0.6.0
+
+### Minor Changes
+
+- 330c56c: Bundles `canvaskit-wasm` to avoid users with strict package managers like PNPM needing to install it directly
+
 ## 0.5.6
 
 ### Patch Changes
