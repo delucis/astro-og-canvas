@@ -71,10 +71,10 @@ class FontManager {
    * @returns A font manager for all fonts loaded up until now.
    */
   async get(fontUrls: string[]): Promise<FontMgr> {
-    let hasNew = false;
     this.#loading = this.#loading.then(
       () =>
         new Promise<void>(async (resolve) => {
+          let hasNew = false;
           for (const url of fontUrls) {
             if (this.#cache.has(url)) continue;
             hasNew = true;
@@ -92,11 +92,11 @@ class FontManager {
               this.#cache.set(url, file);
             }
           }
+          if (hasNew) await this.#updateManager();
           resolve();
         })
     );
     await this.#loading;
-    if (hasNew) await this.#updateManager();
     return this.#manager!;
   }
 
