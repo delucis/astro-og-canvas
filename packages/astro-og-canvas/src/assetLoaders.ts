@@ -71,28 +71,30 @@ class FontManager {
    * @returns A font manager for all fonts loaded up until now.
    */
   async get(fontUrls: string[]): Promise<FontMgr> {
-    await this.#loading;
     let hasNew = false;
-    this.#loading = new Promise<void>(async (resolve) => {
-      for (const url of fontUrls) {
-        if (this.#cache.has(url)) continue;
-        hasNew = true;
-        debug('Loading', url);
-        if (/^https?:\/\//.test(url)) {
-          const response = await fetch(url);
-          if (response.ok) {
-            this.#cache.set(url, await response.arrayBuffer());
-          } else {
-            this.#cache.set(url, undefined);
-            error(response.status, response.statusText, '—', url);
+    this.#loading = this.#loading.then(
+      () =>
+        new Promise<void>(async (resolve) => {
+          for (const url of fontUrls) {
+            if (this.#cache.has(url)) continue;
+            hasNew = true;
+            debug('Loading', url);
+            if (/^https?:\/\//.test(url)) {
+              const response = await fetch(url);
+              if (response.ok) {
+                this.#cache.set(url, await response.arrayBuffer());
+              } else {
+                this.#cache.set(url, undefined);
+                error(response.status, response.statusText, '—', url);
+              }
+            } else {
+              const file = await fs.readFile(url);
+              this.#cache.set(url, file);
+            }
           }
-        } else {
-          const file = await fs.readFile(url);
-          this.#cache.set(url, file);
-        }
-      }
-      resolve();
-    });
+          resolve();
+        })
+    );
     await this.#loading;
     if (hasNew) await this.#updateManager();
     return this.#manager!;
