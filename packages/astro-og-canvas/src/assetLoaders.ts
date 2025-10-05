@@ -115,7 +115,7 @@ interface LoadedImage {
   hash: string;
 }
 
-const images = { cache: new Map<string, LoadedImage>(), loading: Promise.resolve() };
+const images = { cache: new Map<string, LoadedImage>(), queue: pQueue() };
 
 /**
  * Load an image. Backed by an in-memory cache to avoid repeat disk-reads.
@@ -123,20 +123,16 @@ const images = { cache: new Map<string, LoadedImage>(), loading: Promise.resolve
  * @returns Buffer containing the image contents.
  */
 export const loadImage = async (path: string): Promise<LoadedImage> => {
-  await images.loading;
-  let image: LoadedImage;
-  images.loading = new Promise(async (resolve) => {
+  return await images.queue(async () => {
     const cached = images.cache.get(path);
     if (cached) {
-      image = cached;
+      return cached;
     } else {
       // TODO: Figure out if there’s deno-compatible way to load images.
       const buffer = await fs.readFile(path);
-      image = { buffer, hash: shorthash(buffer.toString()) };
+      const image = { buffer, hash: shorthash(buffer.toString()) };
       images.cache.set(path, image);
+      return image;
     }
-    resolve();
   });
-  await images.loading;
-  return image!;
 };
