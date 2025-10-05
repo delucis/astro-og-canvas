@@ -1,7 +1,8 @@
-import type { FontMgr, CanvasKit } from 'canvaskit-wasm/full';
+import type { CanvasKit, FontMgr } from 'canvaskit-wasm/full';
+import { Buffer } from 'node:buffer';
 import fs from 'node:fs/promises';
 import { createRequire } from 'node:module';
-import { Buffer } from 'node:buffer';
+import pQueue from './queue';
 import { shorthash } from './shorthash';
 const { resolve } = createRequire(import.meta.url);
 
@@ -40,7 +41,7 @@ class FontManager {
   readonly #cache = new Map<string, ArrayBuffer | undefined>();
   readonly #hashCache = new Map<string, string>();
   /** Promise to co-ordinate `#get` calls to run sequentially. */
-  #loading = Promise.resolve();
+  #queue = pQueue();
   /** Current `CanvasKit.FontMgr` instance. */
   #manager?: FontMgr;
 
@@ -71,32 +72,27 @@ class FontManager {
    * @returns A font manager for all fonts loaded up until now.
    */
   async get(fontUrls: string[]): Promise<FontMgr> {
-    this.#loading = this.#loading.then(
-      () =>
-        new Promise<void>(async (resolve) => {
-          let hasNew = false;
-          for (const url of fontUrls) {
-            if (this.#cache.has(url)) continue;
-            hasNew = true;
-            debug('Loading', url);
-            if (/^https?:\/\//.test(url)) {
-              const response = await fetch(url);
-              if (response.ok) {
-                this.#cache.set(url, await response.arrayBuffer());
-              } else {
-                this.#cache.set(url, undefined);
-                error(response.status, response.statusText, '—', url);
-              }
-            } else {
-              const file = await fs.readFile(url);
-              this.#cache.set(url, file);
-            }
+    await this.#queue(async () => {
+      let hasNew = false;
+      for (const url of fontUrls) {
+        if (this.#cache.has(url)) continue;
+        hasNew = true;
+        debug('Loading', url);
+        if (/^https?:\/\//.test(url)) {
+          const response = await fetch(url);
+          if (response.ok) {
+            this.#cache.set(url, await response.arrayBuffer());
+          } else {
+            this.#cache.set(url, undefined);
+            error(response.status, response.statusText, '—', url);
           }
-          if (hasNew) await this.#updateManager();
-          resolve();
-        })
-    );
-    await this.#loading;
+        } else {
+          const file = await fs.readFile(url);
+          this.#cache.set(url, file);
+        }
+      }
+      if (hasNew) await this.#updateManager();
+    });
     return this.#manager!;
   }
 
