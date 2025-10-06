@@ -45,8 +45,12 @@ class FontManager {
   /** Current `CanvasKit.FontMgr` instance. */
   #manager?: FontMgr;
 
-  /** Instantiate a new `CanvasKit.FontMgr` instance with all the currently cached fonts. */
-  async #updateManager(): Promise<void> {
+  /** Get a `CanvasKit.FontMgr` instance with all the currently cached fonts, creating a new one if needed. */
+  async #getOrCreateManager(shouldUpdate: boolean): Promise<FontMgr> {
+    if (!shouldUpdate && this.#manager) {
+      return this.#manager;
+    }
+
     const CanvasKit = await getCanvasKit();
     const fontData = Array.from(this.#cache.values()).filter((v) => !!v) as ArrayBuffer[];
     this.#manager = CanvasKit.FontMgr.FromData(...fontData)!;
@@ -57,6 +61,8 @@ class FontManager {
     const fontFamilies = [];
     for (let i = 0; i < fontCount; i++) fontFamilies.push(this.#manager.getFamilyName(i));
     debug('Loaded', fontCount, 'font families:\n' + fontFamilies.join(', '));
+
+    return this.#manager;
   }
 
   /**
@@ -72,7 +78,7 @@ class FontManager {
    * @returns A font manager for all fonts loaded up until now.
    */
   async get(fontUrls: string[]): Promise<FontMgr> {
-    await this.#queue(async () => {
+    return this.#queue(async () => {
       let hasNew = false;
       for (const url of fontUrls) {
         if (this.#cache.has(url)) continue;
@@ -91,9 +97,8 @@ class FontManager {
           this.#cache.set(url, file);
         }
       }
-      if (hasNew) await this.#updateManager();
+      return this.#getOrCreateManager(hasNew);
     });
-    return this.#manager!;
   }
 
   /** Get a short hash for a given font resource. */
@@ -122,8 +127,8 @@ const images = { cache: new Map<string, LoadedImage>(), queue: pQueue() };
  * @param path Path to an image file, e.g. `./src/logo.png`.
  * @returns Buffer containing the image contents.
  */
-export const loadImage = async (path: string): Promise<LoadedImage> => {
-  return await images.queue(async () => {
+export const loadImage = async (path: string): Promise<LoadedImage> =>
+  images.queue(async () => {
     const cached = images.cache.get(path);
     if (cached) {
       return cached;
@@ -135,4 +140,3 @@ export const loadImage = async (path: string): Promise<LoadedImage> => {
       return image;
     }
   });
-};
