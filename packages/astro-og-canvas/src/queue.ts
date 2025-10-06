@@ -18,17 +18,12 @@ export function pQueue() {
   const queue: Array<(val?: unknown) => void> = [];
   let activeCount = 0;
 
+  /** Process the next queued function if we're under the concurrency limit. */
   const resumeNext = () => {
-    // Process the next queued function if we're under the concurrency limit
     if (activeCount < 1 && queue.length > 0) {
       activeCount++;
       queue.shift()!();
     }
-  };
-
-  const next = () => {
-    activeCount--;
-    resumeNext();
   };
 
   const run = async <T extends unknown>(task: () => T, resolve: ResolveCallback<T>) => {
@@ -46,7 +41,8 @@ export function pQueue() {
     } catch {}
 
     // Decrement active count and process next queued function
-    next();
+    activeCount--;
+    resumeNext();
   };
 
   const enqueue = <T extends unknown>(task: () => T, resolve: ResolveCallback<T>) => {
@@ -60,6 +56,7 @@ export function pQueue() {
     if (activeCount < 1) resumeNext();
   };
 
+  /** Run `task` when any previously enqueued tasks have completed. */
   const generator = <T extends unknown>(task: () => T) =>
     new Promise<T>((resolve) => {
       enqueue(task, resolve);
