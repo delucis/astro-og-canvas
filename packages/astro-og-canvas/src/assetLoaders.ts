@@ -2,7 +2,7 @@ import type { CanvasKit, FontMgr } from 'canvaskit-wasm/full';
 import { Buffer } from 'node:buffer';
 import fs from 'node:fs/promises';
 import { createRequire } from 'node:module';
-import pQueue from './queue';
+import { pQueue } from './queue';
 import { shorthash } from './shorthash';
 const { resolve } = createRequire(import.meta.url);
 
@@ -40,7 +40,7 @@ class FontManager {
   /** Font data cache to avoid repeat downloads. */
   readonly #cache = new Map<string, ArrayBuffer | undefined>();
   readonly #hashCache = new Map<string, string>();
-  /** Promise to co-ordinate `#get` calls to run sequentially. */
+  /** Queue to co-ordinate `#get` calls to run sequentially. */
   #queue = pQueue();
   /** Current `CanvasKit.FontMgr` instance. */
   #manager?: FontMgr;
