@@ -1,3 +1,6 @@
+// Derived from https://github.com/sindresorhus/p-limit under MIT License
+// p-limit is copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+
 type ResolveCallback<T extends unknown> = (val: T | PromiseLike<T>) => void;
 
 /**
