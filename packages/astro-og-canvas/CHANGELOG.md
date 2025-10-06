@@ -1,5 +1,11 @@
 # astro-og-canvas
 
+## 0.7.1
+
+### Patch Changes
+
+- e8bb055: Improves handling of cases where OG images are requested to be generated in parallel
+
 ## 0.7.0
 
 ### Minor Changes
