@@ -16,13 +16,13 @@ importers:
         version: 2.29.7(@types/node@18.19.130)
       astro:
         specifier: ^4.16.19
-        version: 4.16.19(@types/node@18.19.130)(rollup@4.46.3)(typescript@5.9.3)
+        version: 4.16.19(@types/node@18.19.130)(rollup@4.46.3)(typescript@5.0.4)
       tsm:
         specifier: ^2.3.0
         version: 2.3.0
       typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
+        specifier: ^5.0.4
+        version: 5.0.4
       uvu:
         specifier: ^0.5.6
         version: 0.5.6
@@ -31,7 +31,7 @@ importers:
     devDependencies:
       astro:
         specifier: ^4.16.19
-        version: 4.16.19(@types/node@18.19.130)(rollup@4.46.3)(typescript@5.9.3)
+        version: 4.16.19(@types/node@18.19.130)(rollup@4.46.3)(typescript@5.0.4)
       astro-og-canvas:
         specifier: workspace:*
         version: link:../packages/astro-og-canvas
@@ -56,10 +56,10 @@ importers:
         version: 18.19.130
       astro:
         specifier: ^4.16.19
-        version: 4.16.19(@types/node@18.19.130)(rollup@4.46.3)(typescript@5.9.3)
+        version: 4.16.19(@types/node@18.19.130)(rollup@4.46.3)(typescript@5.0.4)
       typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
+        specifier: ^5.0.4
+        version: 5.0.4
 
 packages:
 
@@ -1871,9 +1871,9 @@ packages:
     resolution: {integrity: sha512-TeTSQ6H5YHvpqVwBRcnLDCBnDOHWYu7IvGbHT6N8AOymcr9PJGjc1GTtiWZTYg0NCgYwvnYWEkVChQAr9bjfwA==}
     engines: {node: '>=16'}
 
-  typescript@5.9.3:
-    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
-    engines: {node: '>=14.17'}
+  typescript@5.0.4:
+    resolution: {integrity: sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==}
+    engines: {node: '>=12.20'}
     hasBin: true
 
   undici-types@5.26.5:
@@ -2758,7 +2758,7 @@ snapshots:
 
   array-union@2.1.0: {}
 
-  astro@4.16.19(@types/node@18.19.130)(rollup@4.46.3)(typescript@5.9.3):
+  astro@4.16.19(@types/node@18.19.130)(rollup@4.46.3)(typescript@5.0.4):
     dependencies:
       '@astrojs/compiler': 2.12.2
       '@astrojs/internal-helpers': 0.4.1
@@ -2811,7 +2811,7 @@ snapshots:
       semver: 7.7.2
       shiki: 1.29.2
       tinyexec: 0.3.2
-      tsconfck: 3.1.6(typescript@5.9.3)
+      tsconfck: 3.1.6(typescript@5.0.4)
       unist-util-visit: 5.0.0
       vfile: 6.0.3
       vite: 5.4.19(@types/node@18.19.130)
@@ -2821,7 +2821,7 @@ snapshots:
       yargs-parser: 21.1.1
       zod: 3.25.76
       zod-to-json-schema: 3.24.6(zod@3.25.76)
-      zod-to-ts: 1.2.0(typescript@5.9.3)(zod@3.25.76)
+      zod-to-ts: 1.2.0(typescript@5.0.4)(zod@3.25.76)
     optionalDependencies:
       sharp: 0.33.5
     transitivePeerDependencies:
@@ -4139,9 +4139,9 @@ snapshots:
 
   trough@2.2.0: {}
 
-  tsconfck@3.1.6(typescript@5.9.3):
+  tsconfck@3.1.6(typescript@5.0.4):
     optionalDependencies:
-      typescript: 5.9.3
+      typescript: 5.0.4
 
   tslib@2.8.1:
     optional: true
@@ -4152,7 +4152,7 @@ snapshots:
 
   type-fest@4.41.0: {}
 
-  typescript@5.9.3: {}
+  typescript@5.0.4: {}
 
   undici-types@5.26.5: {}
 
@@ -4292,9 +4292,9 @@ snapshots:
     dependencies:
       zod: 3.25.76
 
-  zod-to-ts@1.2.0(typescript@5.9.3)(zod@3.25.76):
+  zod-to-ts@1.2.0(typescript@5.0.4)(zod@3.25.76):
     dependencies:
-      typescript: 5.9.3
+      typescript: 5.0.4
       zod: 3.25.76
 
   zod@3.25.76: {}
