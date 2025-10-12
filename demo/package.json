@@ -11,6 +11,6 @@
   "devDependencies": {
     "astro": "^4.16.19",
     "astro-og-canvas": "workspace:*",
-    "canvaskit-wasm": "^0.39.1"
+    "canvaskit-wasm": "^0.40.0"
   }
 }
