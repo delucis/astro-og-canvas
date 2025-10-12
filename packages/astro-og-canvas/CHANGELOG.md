@@ -1,5 +1,13 @@
 # astro-og-canvas
 
+## 0.7.2
+
+### Patch Changes
+
+- [#100](https://github.com/delucis/astro-og-canvas/pull/100) [`a5f25e2`](https://github.com/delucis/astro-og-canvas/commit/a5f25e2667d42a89afc5503be9b82d8626c2bf52) Thanks [@delucis](https://github.com/delucis)! - This package is now published using OIDC trusted publishing and provenance guarantees
+
+- [#99](https://github.com/delucis/astro-og-canvas/pull/99) [`6fc6258`](https://github.com/delucis/astro-og-canvas/commit/6fc62589cac2b1d4067e7730f4afb981d79c0ac8) Thanks [@delucis](https://github.com/delucis)! - Updates `entities` and `canvaskit-wasm` internal dependencies
+
 ## 0.7.1
 
 ### Patch Changes
