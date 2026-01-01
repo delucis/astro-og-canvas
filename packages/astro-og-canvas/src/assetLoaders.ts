@@ -38,7 +38,7 @@ function formatCanvasKitInitError(e: unknown) {
 
 class FontManager {
   /** Font data cache to avoid repeat downloads. */
-  readonly #cache = new Map<string, ArrayBuffer | undefined>();
+  readonly #cache = new Map<string, Buffer | ArrayBuffer | undefined>();
   readonly #hashCache = new Map<string, string>();
   /** Queue to co-ordinate `#get` calls to run sequentially. */
   #queue = pQueue();
@@ -106,7 +106,7 @@ class FontManager {
     let hash = this.#hashCache.get(url) || '';
     if (hash) return hash;
     const buffer = this.#cache.get(url);
-    hash = buffer ? shorthash(Buffer.from(buffer).toString()) : '';
+    hash = buffer ? shorthash(buffer.toString()) : '';
     this.#hashCache.set(url, hash);
     return hash;
   }

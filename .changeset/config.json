@@ -7,5 +7,5 @@
   "access": "public",
   "baseBranch": "latest",
   "updateInternalDependencies": "patch",
-  "ignore": []
+  "ignore": ["@demo/astro-og-canvas"]
 }
