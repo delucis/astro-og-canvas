@@ -1,5 +1,17 @@
 # astro-og-canvas
 
+## 0.8.0
+
+### Minor Changes
+
+- [#114](https://github.com/delucis/astro-og-canvas/pull/114) [`a9f9fd2`](https://github.com/delucis/astro-og-canvas/commit/a9f9fd234e799a49f59ed4fa3def1c490f7c8066) Thanks [@delucis](https://github.com/delucis)! - Drops official support for Astro 3 and 4. Use Astro 5 instead.
+
+### Patch Changes
+
+- [#114](https://github.com/delucis/astro-og-canvas/pull/114) [`a9f9fd2`](https://github.com/delucis/astro-og-canvas/commit/a9f9fd234e799a49f59ed4fa3def1c490f7c8066) Thanks [@delucis](https://github.com/delucis)! - Adds experimental support for Astro 6
+
+- [#109](https://github.com/delucis/astro-og-canvas/pull/109) [`975f8ac`](https://github.com/delucis/astro-og-canvas/commit/975f8ac932bbd35cc731334e8d3f03357a08633e) Thanks [@delucis](https://github.com/delucis)! - Refactors internals
+
 ## 0.7.2
 
 ### Patch Changes
