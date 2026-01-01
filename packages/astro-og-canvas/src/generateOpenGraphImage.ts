@@ -59,12 +59,12 @@ class ImageCache {
     } catch {}
   }
   /** Retrieve an image from the file system cache if it exists. */
-  async get(cachePath: string): Promise<Buffer | undefined> {
+  async get(cachePath: string): Promise<Buffer<any> | undefined> {
     await this.#mkdir(path.dirname(cachePath));
     return await fs.readFile(cachePath).catch(() => undefined);
   }
   /** Write an image to the file system cache. */
-  async set(cachePath: string, image: Buffer): Promise<void> {
+  async set(cachePath: string, image: Buffer<any>): Promise<void> {
     await this.#mkdir(path.dirname(cachePath));
     await fs.writeFile(cachePath, image).catch(() => undefined);
   }
@@ -85,7 +85,7 @@ export async function generateOpenGraphImage({
   fonts = ['https://api.fontsource.org/v1/fonts/noto-sans/latin-400-normal.ttf'],
   format = 'PNG',
   quality = 90,
-}: OGImageOptions) {
+}: OGImageOptions): Promise<BodyInit> {
   // Load and configure font families.
   const fontMgr = await fontManager.get(fonts);
   const loadedLogo = logo && (await loadImage(logo.path));
