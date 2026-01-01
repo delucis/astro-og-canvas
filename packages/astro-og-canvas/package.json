@@ -40,9 +40,6 @@
     "entities": "^7.0.0"
   },
   "peerDependencies": {
-    "astro": "^3.0.0 || ^4.0.0 || ^5.0.0"
-  },
-  "engines": {
-    "node": ">=18.14.1"
+    "astro": "^5.0.0 || ^6.0.0-alpha"
   }
 }
