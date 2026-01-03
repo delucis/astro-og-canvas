@@ -1,8 +1,12 @@
+import type { MarkdownInstance } from 'astro';
 import { OGImageRoute } from 'astro-og-canvas';
 
 export const { getStaticPaths, GET } = OGImageRoute({
   param: 'route',
-  pages: import.meta.glob('/src/pages/**/*.md', { eager: true }),
+  pages: import.meta.glob<MarkdownInstance<{ title?: string; description?: string }>>(
+    '/src/pages/**/*.md',
+    { eager: true }
+  ),
   getImageOptions: (_path, page) => ({
     title: page.frontmatter.title,
     description: page.frontmatter.description,

@@ -1,4 +1,4 @@
-import { OGImageRoute } from 'astro-og-canvas';
+import { OGImageRoute, type OGImageOptions } from 'astro-og-canvas';
 
 const logoPath = './src/astro-docs-logo.png';
 const bgPath = './src/bgPattern.png';
@@ -62,7 +62,7 @@ export const { getStaticPaths, GET } = OGImageRoute({
       title: 'bgImage: {\n  position: ["end", "center"],\n}',
       font: { title: { color: [0, 0, 0], weight: 'Bold' } },
     },
-  },
+  } satisfies Record<string, Partial<OGImageOptions>>,
   getImageOptions: (_path, page) => ({
     title: '',
     description: '',
