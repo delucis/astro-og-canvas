@@ -1,5 +1,30 @@
 # astro-og-canvas
 
+## 0.9.0
+
+### Minor Changes
+
+- [#117](https://github.com/delucis/astro-og-canvas/pull/117) [`b94a123`](https://github.com/delucis/astro-og-canvas/commit/b94a12315af9db9f63e44dc7d7fece4161cead50) Thanks [@delucis](https://github.com/delucis)! - Adds type safety to `OGImageRoute`. The `page` parameter in `getSlug()` and `getImageOptions()` is now correctly inferred from the value passed to `pages` instead of being typed as `any`.
+
+  ```js
+  OGImageRoute({
+    pages: {
+      example: {
+        title: 'Example Page',
+        description: 'Description of this page shown in smaller text',
+      },
+    },
+    getImageOptions: (path, page) => {
+      page;
+      // ^? { title: string; description: string }
+    },
+  });
+  ```
+
+  ⚠️ **Potentially breaking change:** If you are type checking your code base, you may see type errors if you are accessing `page` in `getSlug()` or `getImageOptions()` in a non-type-safe way and will need to either update that code or add some additional types.
+
+- [#117](https://github.com/delucis/astro-og-canvas/pull/117) [`b94a123`](https://github.com/delucis/astro-og-canvas/commit/b94a12315af9db9f63e44dc7d7fece4161cead50) Thanks [@delucis](https://github.com/delucis)! - Exports `OGImageOptions` type
+
 ## 0.8.0
 
 ### Minor Changes
