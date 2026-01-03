@@ -1,5 +1,24 @@
 # astro-og-canvas
 
+## 0.10.0
+
+### Minor Changes
+
+- [#119](https://github.com/delucis/astro-og-canvas/pull/119) [`151edd2`](https://github.com/delucis/astro-og-canvas/commit/151edd223d3374d1a13b5e09a604e17c2c24c6d8) Thanks [@delucis](https://github.com/delucis)! - Makes `OGImageRoute()` asynchronous.
+
+  ⚠️ **BREAKING CHANGE:** You must now `await` the result of `OGImageRoute()`:
+
+  ```diff
+  import { OGImageRoute } from 'astro-og-canvas';
+
+  - export const { getStaticPaths, GET } = OGImageRoute({
+  + export const { getStaticPaths, GET } = await OGImageRoute({
+  ```
+
+### Patch Changes
+
+- [#119](https://github.com/delucis/astro-og-canvas/pull/119) [`151edd2`](https://github.com/delucis/astro-og-canvas/commit/151edd223d3374d1a13b5e09a604e17c2c24c6d8) Thanks [@delucis](https://github.com/delucis)! - Fixes using the built-in `getSlug()` for OG images with `format: "JPEG"` or `format: "WEBP"`
+
 ## 0.9.0
 
 ### Minor Changes
