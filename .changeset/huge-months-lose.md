@@ -14,7 +14,7 @@ OGImageRoute({
   },
   getImageOptions: (path, page) => {
     page
-    // ^ { title: string; description: string } 
+    // ^? { title: string; description: string } 
   }
 })
 ```
