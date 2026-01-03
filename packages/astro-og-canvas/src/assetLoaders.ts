@@ -11,7 +11,7 @@ const error = (...args: any[]) => console.error('[astro-og-canvas]', ...args);
 
 /** CanvasKit singleton. */
 let canvasKitSingleton: CanvasKit;
-export async function getCanvasKit() {
+export async function getCanvasKit(): Promise<CanvasKit> {
   if (!canvasKitSingleton) {
     try {
       const { default: init } = await import('canvaskit-wasm/full');
@@ -111,7 +111,7 @@ class FontManager {
     return hash;
   }
 }
-export const fontManager = new FontManager();
+export const fontManager: FontManager = new FontManager();
 
 interface LoadedImage {
   /** Pixel buffer for the loaded image. */

@@ -44,7 +44,7 @@ function bitwise(str: string) {
   return hash;
 }
 
-export function shorthash(text: string) {
+export function shorthash(text: string): string {
   let num: number;
   let result = '';
 

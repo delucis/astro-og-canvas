@@ -15,7 +15,9 @@ concurrency:
 jobs:
   test:
     strategy:
+      fail-fast: false
       matrix:
+        command: [test, typecheck]
         os: [ubuntu-latest, windows-latest]
         astro: [^5, alpha]
     runs-on: ${{ matrix.os }}
@@ -39,4 +41,4 @@ jobs:
         working-directory: demo
 
       - name: Test
-        run: pnpm t
+        run: pnpm run ${{ matrix.command }}
