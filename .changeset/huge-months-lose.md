@@ -18,3 +18,5 @@ OGImageRoute({
   }
 })
 ```
+
+⚠️ **Potentially breaking change:** If you are type checking your code base, you may see type errors if you are accessing `page` in `getSlug()` or `getImageOptions()` in a non-type-safe way and will need to either update that code or add some additional types.
