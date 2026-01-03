@@ -1,7 +1,7 @@
 import type { MarkdownInstance } from 'astro';
 import { OGImageRoute } from 'astro-og-canvas';
 
-export const { getStaticPaths, GET } = OGImageRoute({
+export const { getStaticPaths, GET } = await OGImageRoute({
   param: 'route',
   pages: import.meta.glob<MarkdownInstance<{ title?: string; description?: string }>>(
     '/src/pages/**/*.md',

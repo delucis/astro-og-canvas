@@ -34,7 +34,7 @@ pnpm i canvaskit-wasm
 
    import { OGImageRoute } from 'astro-og-canvas';
 
-   export const { getStaticPaths, GET } = OGImageRoute({
+   export const { getStaticPaths, GET } = await OGImageRoute({
      // Tell us the name of your dynamic route segment.
      // In this case it’s `route`, because the file is named `[...route].ts`.
      param: 'route',
@@ -78,7 +78,7 @@ const collectionEntries = await getCollection('my-collection');
 // to { 'post.md': { title: 'Example', description: '' } }
 const pages = Object.fromEntries(collectionEntries.map(({ slug, data }) => [slug, data]));
 
-export const { getStaticPaths, GET } = OGImageRoute({
+export const { getStaticPaths, GET } = await OGImageRoute({
   // Tell us the name of your dynamic route segment.
   // In this case it’s `route`, because the file is named `[...route].ts`.
   param: 'route',
@@ -101,7 +101,7 @@ In the following example, every Markdown file in the project’s `src/pages/` di
 ```js
 import { OGImageRoute } from 'astro-og-canvas';
 
-export const { getStaticPaths, GET } = OGImageRoute({
+export const { getStaticPaths, GET } = await OGImageRoute({
   // Tell us the name of your dynamic route segment.
   // In this case it’s `route`, because the file is named `[...route].ts`.
   param: 'route',
@@ -140,7 +140,7 @@ for (const { url } of results) {
   pokemon[details.name] = details;
 }
 
-export const { getStaticPaths, GET } = OGImageRoute({
+export const { getStaticPaths, GET } = await OGImageRoute({
   pages: pokemon,
 
   getImageOptions: (path, page) => ({

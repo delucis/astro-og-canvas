@@ -1,6 +1,6 @@
 import { OGImageRoute, type OGImageOptions } from 'astro-og-canvas';
 
-export const { getStaticPaths, GET } = OGImageRoute({
+export const { getStaticPaths, GET } = await OGImageRoute({
   param: 'path',
   pages: {
     'png.md': {
