@@ -1,4 +1,4 @@
-import { OGImageRoute } from 'astro-og-canvas';
+import { OGImageRoute, type OGImageOptions } from 'astro-og-canvas';
 
 export const { getStaticPaths, GET } = OGImageRoute({
   param: 'path',
@@ -18,7 +18,7 @@ export const { getStaticPaths, GET } = OGImageRoute({
       description: 'Renders an Open Graph image to a WEBP file',
       format: 'WEBP',
     },
-  },
+  } satisfies Record<string, Partial<OGImageOptions>>,
   getSlug(path, { format }) {
     const ext = format.toLowerCase();
     path = path.replace(/^\/src\/pages\//, '');

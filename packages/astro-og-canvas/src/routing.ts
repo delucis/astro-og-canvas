@@ -13,7 +13,7 @@ function makeGetStaticPaths({
   pages,
   param,
   getSlug = pathToSlug,
-}: OGImageRouteConfig): GetStaticPaths {
+}: OGImageRouteConfig<any>): GetStaticPaths {
   const slugs = Object.entries(pages).map((page) => getSlug(...page));
   const paths = slugs.map((slug) => ({ params: { [param]: slug } }));
   return function getStaticPaths() {
@@ -21,7 +21,10 @@ function makeGetStaticPaths({
   };
 }
 
-function createOGImageEndpoint({ getSlug = pathToSlug, ...opts }: OGImageRouteConfig): APIRoute {
+function createOGImageEndpoint({
+  getSlug = pathToSlug,
+  ...opts
+}: OGImageRouteConfig<any>): APIRoute {
   return async function getOGImage({ params }) {
     const pageEntry = Object.entries(opts.pages).find(
       (page) => {
@@ -37,7 +40,7 @@ function createOGImageEndpoint({ getSlug = pathToSlug, ...opts }: OGImageRouteCo
   };
 }
 
-export function OGImageRoute(opts: OGImageRouteConfig): {
+export function OGImageRoute<T>(opts: OGImageRouteConfig<T>): {
   getStaticPaths: GetStaticPaths;
   GET: APIRoute;
 } {
@@ -47,9 +50,9 @@ export function OGImageRoute(opts: OGImageRouteConfig): {
   };
 }
 
-interface OGImageRouteConfig {
-  pages: { [path: string]: any };
+interface OGImageRouteConfig<T extends unknown> {
+  pages: { [path: string]: T };
   param: string;
-  getSlug?: (path: string, page: any) => string;
-  getImageOptions: (path: string, page: any) => OGImageOptions | Promise<OGImageOptions>;
+  getSlug?: (path: string, page: T) => string;
+  getImageOptions: (path: string, page: T) => OGImageOptions | Promise<OGImageOptions>;
 }
