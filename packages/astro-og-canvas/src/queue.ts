@@ -17,7 +17,7 @@ type ResolveCallback<T extends unknown> = (val: T | PromiseLike<T>) => void;
  * // Each promise is run sequentially rather than in parallel.
  * await Promise.all(input);
  */
-export function pQueue() {
+export function pQueue(): <T extends unknown>(task: () => T) => Promise<T> {
   const queue: Array<(val?: unknown) => void> = [];
   let activeCount = 0;
 
