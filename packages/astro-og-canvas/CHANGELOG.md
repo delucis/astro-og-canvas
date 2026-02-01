@@ -1,5 +1,11 @@
 # astro-og-canvas
 
+## 0.10.1
+
+### Patch Changes
+
+- [#128](https://github.com/delucis/astro-og-canvas/pull/128) [`dd829f9`](https://github.com/delucis/astro-og-canvas/commit/dd829f9afaa439e5949f6d0e207a0af07e0777fc) Thanks [@renovate](https://github.com/apps/renovate)! - Updates dependency entities to ^7.0.1
+
 ## 0.10.0
 
 ### Minor Changes
