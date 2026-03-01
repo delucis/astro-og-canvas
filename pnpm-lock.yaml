@@ -18,8 +18,8 @@ importers:
         specifier: ^2.29.8
         version: 2.29.8(@types/node@24.10.1)
       astro:
-        specifier: ^5.17.2
-        version: 5.17.2(@types/node@24.10.1)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2)
+        specifier: ^5.17.3
+        version: 5.18.0(@types/node@24.10.1)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2)
       tsm:
         specifier: ^2.3.0
         version: 2.3.0
@@ -33,8 +33,8 @@ importers:
   demo:
     devDependencies:
       astro:
-        specifier: ^5.17.2
-        version: 5.17.2(@types/node@24.10.1)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2)
+        specifier: ^5.17.3
+        version: 5.18.0(@types/node@24.10.1)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2)
       astro-og-canvas:
         specifier: workspace:*
         version: link:../packages/astro-og-canvas
@@ -58,8 +58,8 @@ importers:
         specifier: ^18.19.130
         version: 18.19.130
       astro:
-        specifier: ^5.17.2
-        version: 5.17.2(@types/node@18.19.130)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2)
+        specifier: ^5.17.3
+        version: 5.18.0(@types/node@18.19.130)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -997,8 +997,8 @@ packages:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
 
-  astro@5.17.2:
-    resolution: {integrity: sha512-7jnMqGo53hOQNwo1N/wqeOvUp8wwW/p+DeerSjSkHNx8L/1mhy6P7rVo7EhdmF8DpKqw0tl/B5Fx1WcIzg1ysA==}
+  astro@5.18.0:
+    resolution: {integrity: sha512-CHiohwJIS4L0G6/IzE1Fx3dgWqXBCXus/od0eGUfxrZJD2um2pE7ehclMmgL/fXqbU7NfE1Ze2pq34h2QaA6iQ==}
     engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
 
@@ -3386,7 +3386,7 @@ snapshots:
 
   array-union@2.1.0: {}
 
-  astro@5.17.2(@types/node@18.19.130)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2):
+  astro@5.18.0(@types/node@18.19.130)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2):
     dependencies:
       '@astrojs/compiler': 2.13.0
       '@astrojs/internal-helpers': 0.7.5
@@ -3488,7 +3488,7 @@ snapshots:
       - uploadthing
       - yaml
 
-  astro@5.17.2(@types/node@24.10.1)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2):
+  astro@5.18.0(@types/node@24.10.1)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2):
     dependencies:
       '@astrojs/compiler': 2.13.0
       '@astrojs/internal-helpers': 0.7.5
