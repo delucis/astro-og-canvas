@@ -18,7 +18,7 @@ importers:
         specifier: ^2.30.0
         version: 2.30.0(@types/node@24.10.1)
       astro:
-        specifier: ^6.0.2
+        specifier: ^6.0.3
         version: 6.0.4(@types/node@24.10.1)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2)
       tsm:
         specifier: ^2.3.0
@@ -33,7 +33,7 @@ importers:
   demo:
     devDependencies:
       astro:
-        specifier: ^6.0.2
+        specifier: ^6.0.3
         version: 6.0.4(@types/node@24.10.1)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2)
       astro-og-canvas:
         specifier: workspace:*
@@ -58,7 +58,7 @@ importers:
         specifier: ^18.19.130
         version: 18.19.130
       astro:
-        specifier: ^6.0.2
+        specifier: ^6.0.3
         version: 6.0.4(@types/node@18.19.130)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2)
       typescript:
         specifier: ^5.9.3
