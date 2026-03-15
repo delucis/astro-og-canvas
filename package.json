@@ -14,7 +14,7 @@
     "@astrojs/check": "^0.9.7",
     "@changesets/changelog-github": "^0.6.0",
     "@changesets/cli": "^2.30.0",
-    "astro": "^5.18.1",
+    "astro": "^6.0.2",
     "tsm": "^2.3.0",
     "typescript": "^5.9.3",
     "uvu": "^0.5.6"
