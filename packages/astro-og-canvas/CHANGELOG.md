@@ -1,5 +1,17 @@
 # astro-og-canvas
 
+## 0.11.0
+
+### Minor Changes
+
+- [#157](https://github.com/delucis/astro-og-canvas/pull/157) [`91ac061`](https://github.com/delucis/astro-og-canvas/commit/91ac06176a60618b5e2b53df9a462de0bd42f595) Thanks [@renovate](https://github.com/apps/renovate)! - Updates dependency `entities` to v8
+
+  ⚠️ **Potentially breaking change:** The minimum supported Node version is now 20.19.0
+
+### Patch Changes
+
+- [#155](https://github.com/delucis/astro-og-canvas/pull/155) [`1066126`](https://github.com/delucis/astro-og-canvas/commit/1066126c60e613693618a257b81471eb51af6369) Thanks [@renovate](https://github.com/apps/renovate)! - Updates dependency `canvaskit-wasm` to ^0.41.0
+
 ## 0.10.1
 
 ### Patch Changes
