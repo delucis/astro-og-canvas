@@ -18,8 +18,8 @@ importers:
         specifier: ^2.30.0
         version: 2.30.0(@types/node@24.10.1)
       astro:
-        specifier: ^6.1.1
-        version: 6.1.2(@types/node@24.10.1)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2)
+        specifier: ^6.1.5
+        version: 6.1.6(@types/node@24.10.1)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2)
       tsm:
         specifier: ^2.3.0
         version: 2.3.0
@@ -33,8 +33,8 @@ importers:
   demo:
     devDependencies:
       astro:
-        specifier: ^6.1.1
-        version: 6.1.2(@types/node@24.10.1)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2)
+        specifier: ^6.1.5
+        version: 6.1.6(@types/node@24.10.1)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2)
       astro-og-canvas:
         specifier: workspace:*
         version: link:../packages/astro-og-canvas
@@ -58,8 +58,8 @@ importers:
         specifier: ^18.19.130
         version: 18.19.130
       astro:
-        specifier: ^6.1.1
-        version: 6.1.2(@types/node@18.19.130)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2)
+        specifier: ^6.1.5
+        version: 6.1.6(@types/node@18.19.130)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -844,8 +844,8 @@ packages:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
 
-  astro@6.1.2:
-    resolution: {integrity: sha512-r3iIvmB6JvQxsdJLvapybKKq7Bojd1iQK6CCx5P55eRnXJIyUpHx/1UB/GdMm+em/lwaCUasxHCmIO0lCLV2uA==}
+  astro@6.1.6:
+    resolution: {integrity: sha512-pRsz+kYriwCV/AUcY/I9OVKtVHuYFs2DtCszAxprXded/kTE53nMwxfnK0Nf6FPfaX9vcUiLnigcSIhuFoKntA==}
     engines: {node: '>=22.12.0', npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
 
@@ -3085,7 +3085,7 @@ snapshots:
 
   array-union@2.1.0: {}
 
-  astro@6.1.2(@types/node@18.19.130)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2):
+  astro@6.1.6(@types/node@18.19.130)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2):
     dependencies:
       '@astrojs/compiler': 3.0.1
       '@astrojs/internal-helpers': 0.8.0
@@ -3103,7 +3103,6 @@ snapshots:
       cookie: 1.1.1
       devalue: 5.6.4
       diff: 8.0.3
-      dlv: 1.1.3
       dset: 3.1.4
       es-module-lexer: 2.0.0
       esbuild: 0.27.3
@@ -3179,7 +3178,7 @@ snapshots:
       - uploadthing
       - yaml
 
-  astro@6.1.2(@types/node@24.10.1)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2):
+  astro@6.1.6(@types/node@24.10.1)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2):
     dependencies:
       '@astrojs/compiler': 3.0.1
       '@astrojs/internal-helpers': 0.8.0
@@ -3197,7 +3196,6 @@ snapshots:
       cookie: 1.1.1
       devalue: 5.6.4
       diff: 8.0.3
-      dlv: 1.1.3
       dset: 3.1.4
       es-module-lexer: 2.0.0
       esbuild: 0.27.3
