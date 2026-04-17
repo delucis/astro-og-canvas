@@ -8,7 +8,7 @@ export const { getStaticPaths, GET } = await OGImageRoute({
     { eager: true }
   ),
   getImageOptions: (_path, page) => ({
-    title: page.frontmatter.title,
+    title: page.frontmatter.title || '',
     description: page.frontmatter.description,
     logo: { path: './src/astro-docs-logo.png', size: [350] },
     border: { width: 10 },
