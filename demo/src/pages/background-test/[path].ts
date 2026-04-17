@@ -63,8 +63,8 @@ export const { getStaticPaths, GET } = await OGImageRoute({
       font: { title: { color: [0, 0, 0], weight: 'Bold' } },
     },
   } satisfies Record<string, Partial<OGImageOptions>>,
-  getImageOptions: (_path, page) => ({
-    title: '',
+  getImageOptions: (_path, { title, ...page }) => ({
+    title: title || '',
     description: '',
     logo: { path: logoPath, size: [350] },
     bgGradient: [
