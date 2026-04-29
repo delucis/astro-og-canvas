@@ -85,6 +85,7 @@ export async function generateOpenGraphImage({
   fonts = ['https://api.fontsource.org/v1/fonts/noto-sans/latin-400-normal.ttf'],
   format = 'PNG',
   quality = 90,
+  layerOrder = ['border', 'bgImage', 'logo'],
 }: OGImageOptions): Promise<BodyInit> {
   // Load and configure font families.
   const fontMgr = await fontManager.get(fonts);
@@ -108,7 +109,7 @@ export async function generateOpenGraphImage({
       loadedLogo?.hash,
       loadedBg?.hash,
       fonts.map((font) => fontManager.getHash(font)),
-    ])
+    ]),
   );
 
   let cacheFilePath: string | undefined;
@@ -156,96 +157,109 @@ export async function generateOpenGraphImage({
       [0, height],
       bgGradient.map((rgb) => CanvasKit.Color(...rgb)),
       null,
-      CanvasKit.TileMode.Clamp
-    )
+      CanvasKit.TileMode.Clamp,
+    ),
   );
   canvas.drawRect(bgRect, bgPaint);
 
-  // Draw border.
-  if (border.width) {
-    const borderStyle = new CanvasKit.Paint();
-    borderStyle.setStyle(CanvasKit.PaintStyle.Stroke);
-    borderStyle.setColor(CanvasKit.Color(...border.color));
-    borderStyle.setStrokeWidth(border.width * 2);
-    const borders: Record<LogicalSide, XYWH> = {
-      'block-start': edges.top,
-      'block-end': edges.bottom,
-      'inline-start': isRtl ? edges.right : edges.left,
-      'inline-end': isRtl ? edges.left : edges.right,
-    };
-    canvas.drawLine(...borders[border.side], borderStyle);
-  }
-
-  // Draw background image.
-  if (bgImage && loadedBg?.buffer) {
-    const bgImg = CanvasKit.MakeImageFromEncoded(loadedBg.buffer);
-    if (bgImg) {
-      let { position = 'center', fit = 'none' } = bgImage;
-      if (typeof position === 'string') position = [position, position];
-
-      const [bgW, bgH] = [bgImg.width(), bgImg.height()];
-      let [targetW, targetH] = [bgW, bgH];
-      if (fit === 'fill') {
-        [targetW, targetH] = [width, height];
-      } else if (fit === 'cover') {
-        const ratio = bgW / width < bgH / height ? width / bgW : height / bgH;
-        [targetW, targetH] = [bgW * ratio, bgH * ratio];
-      } else if (fit === 'contain') {
-        const ratio = bgW / width > bgH / height ? width / bgW : height / bgH;
-        [targetW, targetH] = [bgW * ratio, bgH * ratio];
-      }
-
-      const [blockAlign, inlineAlign] = position;
-      const targetX =
-        inlineAlign === 'start'
-          ? 0
-          : inlineAlign === 'end'
-          ? width - targetW
-          : (width - targetW) / 2;
-      const targetY =
-        blockAlign === 'start'
-          ? 0
-          : blockAlign === 'end'
-          ? height - targetH
-          : (height - targetH) / 2;
-
-      // Draw image
-      const srcRect = CanvasKit.XYWHRect(0, 0, bgW, bgH);
-      const destRect = CanvasKit.XYWHRect(targetX, targetY, targetW, targetH);
-      canvas.drawImageRect(bgImg, srcRect, destRect, new CanvasKit.Paint());
-    }
-  }
-
-  // Draw logo.
   let logoHeight = 0;
-  if (logo && loadedLogo?.buffer) {
-    const img = CanvasKit.MakeImageFromEncoded(loadedLogo.buffer);
-    if (img) {
-      const logoH = img.height();
-      const logoW = img.width();
-      const targetW = logo.size?.[0] ?? logoW;
-      const targetH = logo.size?.[1] ?? (targetW / logoW) * logoH;
-      const xRatio = targetW / logoW;
-      const yRatio = targetH / logoH;
-      logoHeight = targetH;
 
-      // Matrix transform to scale the logo to the desired size.
-      const imagePaint = new CanvasKit.Paint();
-      imagePaint.setImageFilter(
-        CanvasKit.ImageFilter.MakeMatrixTransform(
-          CanvasKit.Matrix.scaled(xRatio, yRatio),
-          { filter: CanvasKit.FilterMode.Linear },
-          null
-        )
-      );
+  const layerFunctions: { [fnName: string]: () => void } = {
+    border: () => {
+      // Draw border.
+      if (border.width) {
+        const borderStyle = new CanvasKit.Paint();
+        borderStyle.setStyle(CanvasKit.PaintStyle.Stroke);
+        borderStyle.setColor(CanvasKit.Color(...border.color));
+        borderStyle.setStrokeWidth(border.width * 2);
+        const borders: Record<LogicalSide, XYWH> = {
+          'block-start': edges.top,
+          'block-end': edges.bottom,
+          'inline-start': isRtl ? edges.right : edges.left,
+          'inline-end': isRtl ? edges.left : edges.right,
+        };
+        canvas.drawLine(...borders[border.side], borderStyle);
+      }
+    },
+    bgImage: () => {
+      // Draw background image.
+      if (bgImage && loadedBg?.buffer) {
+        const bgImg = CanvasKit.MakeImageFromEncoded(loadedBg.buffer);
+        if (bgImg) {
+          let { position = 'center', fit = 'none' } = bgImage;
+          if (typeof position === 'string') position = [position, position];
 
-      const imageLeft = isRtl
-        ? (1 / xRatio) * (width - margin['inline-start']) - logoW
-        : (1 / xRatio) * margin['inline-start'];
+          const [bgW, bgH] = [bgImg.width(), bgImg.height()];
+          let [targetW, targetH] = [bgW, bgH];
+          if (fit === 'fill') {
+            [targetW, targetH] = [width, height];
+          } else if (fit === 'cover') {
+            const ratio = bgW / width < bgH / height ? width / bgW : height / bgH;
+            [targetW, targetH] = [bgW * ratio, bgH * ratio];
+          } else if (fit === 'contain') {
+            const ratio = bgW / width > bgH / height ? width / bgW : height / bgH;
+            [targetW, targetH] = [bgW * ratio, bgH * ratio];
+          }
 
-      canvas.drawImage(img, imageLeft, (1 / yRatio) * margin['block-start'], imagePaint);
+          const [blockAlign, inlineAlign] = position;
+          const targetX =
+            inlineAlign === 'start'
+              ? 0
+              : inlineAlign === 'end'
+                ? width - targetW
+                : (width - targetW) / 2;
+          const targetY =
+            blockAlign === 'start'
+              ? 0
+              : blockAlign === 'end'
+                ? height - targetH
+                : (height - targetH) / 2;
+
+          // Draw image
+          const srcRect = CanvasKit.XYWHRect(0, 0, bgW, bgH);
+          const destRect = CanvasKit.XYWHRect(targetX, targetY, targetW, targetH);
+          canvas.drawImageRect(bgImg, srcRect, destRect, new CanvasKit.Paint());
+        }
+      }
+    },
+    logo: () => {
+      // Draw logo.
+      if (logo && loadedLogo?.buffer) {
+        const img = CanvasKit.MakeImageFromEncoded(loadedLogo.buffer);
+        if (img) {
+          const logoH = img.height();
+          const logoW = img.width();
+          const targetW = logo.size?.[0] ?? logoW;
+          const targetH = logo.size?.[1] ?? (targetW / logoW) * logoH;
+          const xRatio = targetW / logoW;
+          const yRatio = targetH / logoH;
+          logoHeight = targetH;
+
+          // Matrix transform to scale the logo to the desired size.
+          const imagePaint = new CanvasKit.Paint();
+          imagePaint.setImageFilter(
+            CanvasKit.ImageFilter.MakeMatrixTransform(
+              CanvasKit.Matrix.scaled(xRatio, yRatio),
+              { filter: CanvasKit.FilterMode.Linear },
+              null,
+            ),
+          );
+
+          const imageLeft = isRtl
+            ? (1 / xRatio) * (width - margin['inline-start']) - logoW
+            : (1 / xRatio) * margin['inline-start'];
+
+          canvas.drawImage(img, imageLeft, (1 / yRatio) * margin['block-start'], imagePaint);
+        }
+      }
+    },
+  };
+
+  layerOrder.forEach((fn) => {
+    if (layerFunctions[fn]) {
+      layerFunctions[fn]();
     }
-  }
+  });
 
   if (fontMgr) {
     // Create paragraph with initial styles and add title.
@@ -259,7 +273,7 @@ export async function generateOpenGraphImage({
 
     // Add small empty line betwen title & description.
     paragraphBuilder.pushStyle(
-      new CanvasKit.TextStyle({ fontSize: padding / 3, heightMultiplier: 1 })
+      new CanvasKit.TextStyle({ fontSize: padding / 3, heightMultiplier: 1 }),
     );
     paragraphBuilder.addText('\n\n');
 
