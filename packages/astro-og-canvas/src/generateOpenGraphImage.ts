@@ -106,6 +106,7 @@ export async function generateOpenGraphImage({
       fontConfig,
       fonts,
       quality,
+      layerOrder,
       loadedLogo?.hash,
       loadedBg?.hash,
       fonts.map((font) => fontManager.getHash(font)),
