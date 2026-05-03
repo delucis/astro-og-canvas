@@ -201,10 +201,7 @@ export interface OGImageOptions {
     side?: LogicalSide;
   };
 
-  /**
-   * Optional background image,
-   * e.g. `{ path: './src/background.png', fit: 'cover' }`.
-   */
+  /** Optional background image. */
   bgImage?: {
     /** Path to the background image file, e.g. `'./src/background.png'`. */
     path: string;
