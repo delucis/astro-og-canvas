@@ -11,10 +11,10 @@
     "typecheck": "pnpm -r exec astro check"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.8",
+    "@astrojs/check": "^0.9.9",
     "@changesets/changelog-github": "^0.6.0",
     "@changesets/cli": "^2.31.0",
-    "astro": "^6.1.9",
+    "astro": "^6.1.10",
     "tsm": "^2.3.0",
     "typescript": "^6.0.3",
     "uvu": "^0.5.6"
