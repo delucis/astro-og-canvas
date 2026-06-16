@@ -18,8 +18,8 @@ importers:
         specifier: ^2.31.0
         version: 2.31.0
       astro:
-        specifier: ^6.4.2
-        version: 6.4.2(@types/node@18.19.130)(rollup@4.53.3)(yaml@2.8.2)
+        specifier: ^6.4.6
+        version: 6.4.6(@types/node@18.19.130)(rollup@4.53.3)(yaml@2.8.2)
       tsm:
         specifier: ^2.3.0
         version: 2.3.0
@@ -33,8 +33,8 @@ importers:
   demo:
     devDependencies:
       astro:
-        specifier: ^6.4.2
-        version: 6.4.2(@types/node@18.19.130)(rollup@4.53.3)(yaml@2.8.2)
+        specifier: ^6.4.6
+        version: 6.4.6(@types/node@18.19.130)(rollup@4.53.3)(yaml@2.8.2)
       astro-og-canvas:
         specifier: workspace:*
         version: link:../packages/astro-og-canvas
@@ -58,8 +58,8 @@ importers:
         specifier: ^18.19.130
         version: 18.19.130
       astro:
-        specifier: ^6.4.2
-        version: 6.4.2(@types/node@18.19.130)(rollup@4.53.3)(yaml@2.8.2)
+        specifier: ^6.4.6
+        version: 6.4.6(@types/node@18.19.130)(rollup@4.53.3)(yaml@2.8.2)
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
@@ -842,8 +842,8 @@ packages:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
 
-  astro@6.4.2:
-    resolution: {integrity: sha512-8H89CH2dKL5SCU99OCqdU9BGjmPkSJqaPurywj5XMo7eMFGUFD3vsNhdEKnEh4mK4LgGje3/QDTTSIIGst0G0Q==}
+  astro@6.4.6:
+    resolution: {integrity: sha512-48OBTBKR9ctbf+DQxpOuxGl8ebfn59zTuNQMBzptmG/Mi/H8IdfMSbJgGuX1I/4U6g9yazG1p4BHlf4+2hWU4Q==}
     engines: {node: '>=22.12.0', npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
 
@@ -994,8 +994,8 @@ packages:
     resolution: {integrity: sha512-KxektNH63SrbfUyDiwXqRb1rLwKt33AmMv+5Nhsw1kqZ13SJBRTgZHtGbE+hH3a1mVW1cz+4pqSWVPAtLVXTzQ==}
     engines: {node: '>=18'}
 
-  devalue@5.6.4:
-    resolution: {integrity: sha512-Gp6rDldRsFh/7XuouDbxMH3Mx8GMCcgzIb1pDTvNyn8pZGQ22u+Wa+lGV9dQCltFQ7uVw0MhRyb8XDskNFOReA==}
+  devalue@5.8.1:
+    resolution: {integrity: sha512-4CXDYRBGqN+57wVJkuXBYmpAVUSg3L6JAQa/DFqm238G73E1wuyc/JhGQJzN7vUf/CMphYau2zXbfWzDR5aTEw==}
 
   devlop@1.1.0:
     resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
@@ -3071,7 +3071,7 @@ snapshots:
 
   array-union@2.1.0: {}
 
-  astro@6.4.2(@types/node@18.19.130)(rollup@4.53.3)(yaml@2.8.2):
+  astro@6.4.6(@types/node@18.19.130)(rollup@4.53.3)(yaml@2.8.2):
     dependencies:
       '@astrojs/compiler': 4.0.0
       '@astrojs/internal-helpers': 0.10.0
@@ -3087,7 +3087,7 @@ snapshots:
       clsx: 2.1.1
       common-ancestor-path: 2.0.0
       cookie: 1.1.1
-      devalue: 5.6.4
+      devalue: 5.8.1
       diff: 8.0.3
       dset: 3.1.4
       es-module-lexer: 2.0.0
@@ -3287,7 +3287,7 @@ snapshots:
     dependencies:
       base-64: 1.0.0
 
-  devalue@5.6.4: {}
+  devalue@5.8.1: {}
 
   devlop@1.1.0:
     dependencies:
