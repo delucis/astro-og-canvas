@@ -31,7 +31,7 @@
   ],
   "devDependencies": {
     "@types/node": "^18.19.130",
-    "astro": "^6.4.6",
+    "astro": "^7.0.2",
     "typescript": "^6.0.3"
   },
   "dependencies": {
@@ -40,6 +40,6 @@
     "entities": "^8.0.0"
   },
   "peerDependencies": {
-    "astro": "^5.0.0 || ^6.0.0-alpha"
+    "astro": "^5.0.0 || ^6.0.0 || ^7.0.0"
   }
 }
