@@ -1,5 +1,11 @@
 # astro-og-canvas
 
+## 0.12.0
+
+### Minor Changes
+
+- [#186](https://github.com/delucis/astro-og-canvas/pull/186) [`22ac557`](https://github.com/delucis/astro-og-canvas/commit/22ac557dbe6b088b4b7d112eea10bcd14667102a) Thanks [@michaelfaith](https://github.com/michaelfaith)! - Added support for Astro 7.
+
 ## 0.11.1
 
 ### Patch Changes
