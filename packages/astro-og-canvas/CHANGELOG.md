@@ -1,5 +1,25 @@
 # astro-og-canvas
 
+## 0.13.0
+
+### Minor Changes
+
+- [#189](https://github.com/delucis/astro-og-canvas/pull/189) [`8186730`](https://github.com/delucis/astro-og-canvas/commit/81867303965abb344e56cfbb771efd2423da4e2c) Thanks [@delucis](https://github.com/delucis)! - Adds auto-detection for the route parameter name to `OGImageRoute()`.
+
+  **⚠️ BREAKING CHANGE:** The `param` option to `OGImageRoute()` has been removed and your code should be updated to remove it:
+
+  ```diff
+  export const { getStaticPaths, GET } = await OGImageRoute({
+  - param: 'slug',
+    pages: {
+      // ...
+    },
+    getImageOptions: () => {/* ... */},
+  });
+  ```
+
+  `astro-og-canvas` now detects the `param` value from your image endpoint’s filename automatically.
+
 ## 0.12.0
 
 ### Minor Changes
