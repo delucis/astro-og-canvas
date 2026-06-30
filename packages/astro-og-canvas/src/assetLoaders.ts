@@ -2,8 +2,8 @@ import type { CanvasKit, FontMgr } from 'canvaskit-wasm/full';
 import { Buffer } from 'node:buffer';
 import fs from 'node:fs/promises';
 import { createRequire } from 'node:module';
-import { pQueue } from './queue';
-import { shorthash } from './shorthash';
+import { pQueue } from './queue.js';
+import { shorthash } from './shorthash.js';
 const { resolve } = createRequire(import.meta.url);
 
 const debug = (...args: any[]) => console.debug('[astro-og-canvas]', ...args);

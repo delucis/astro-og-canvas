@@ -1,5 +1,5 @@
 import type { APIRoute, GetStaticPaths } from 'astro';
-import { generateOpenGraphImage } from './generateOpenGraphImage';
+import { generateOpenGraphImage } from './generateOpenGraphImage.js';
 import type { OGImageOptions } from './types';
 
 const pathToSlug = (path: string, _page: any, imageOptions: OGImageOptions): string => {

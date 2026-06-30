@@ -6,7 +6,7 @@
     "build:demo": "pnpm --filter \"@demo/astro-og-canvas\" build",
     "prepublish": "pnpm --filter \"astro-og-canvas\" build",
     "pretest": "pnpm prepublish && pnpm build:demo",
-    "test": "tsm node_modules/uvu/bin.js test",
+    "test": "node --test",
     "pretypecheck": "pnpm prepublish",
     "typecheck": "pnpm -r exec astro check"
   },
@@ -15,9 +15,7 @@
     "@changesets/changelog-github": "^0.7.0",
     "@changesets/cli": "^2.31.0",
     "astro": "^7.0.2",
-    "tsm": "^2.3.0",
-    "typescript": "^6.0.3",
-    "uvu": "^0.5.6"
+    "typescript": "^6.0.3"
   },
   "packageManager": "pnpm@11.6.0"
 }
