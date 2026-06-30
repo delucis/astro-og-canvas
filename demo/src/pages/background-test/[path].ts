@@ -4,7 +4,6 @@ const logoPath = './src/astro-docs-logo.png';
 const bgPath = './src/bgPattern.png';
 
 export const { getStaticPaths, GET } = await OGImageRoute({
-  param: 'path',
   pages: {
     'contain.md': {
       bgImage: { path: bgPath, fit: 'contain' },

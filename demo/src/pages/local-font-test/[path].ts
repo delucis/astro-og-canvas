@@ -1,7 +1,6 @@
 import { OGImageRoute } from 'astro-og-canvas';
 
 export const { getStaticPaths, GET } = await OGImageRoute({
-  param: 'path',
   pages: {
     'local.md': {
       title: 'Local fonts',

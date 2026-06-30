@@ -14,13 +14,6 @@ npm i astro-og-canvas
 pnpm i canvaskit-wasm
 ```
 
-## Version compatibility
-
-| astro  | astro-og-canvas                                                                               |
-| ------ | --------------------------------------------------------------------------------------------- |
-| `≤2.x` | [`0.1.x`](https://github.com/delucis/astro-og-canvas/blob/astro-og-canvas%400.1.8/README.md)  |
-| `≥3.x` | [`≥0.2.x`](https://github.com/delucis/astro-og-canvas/blob/astro-og-canvas%400.2.0/README.md) |
-
 ## Usage
 
 ### Creating an OpenGraph image endpoint
@@ -35,10 +28,6 @@ pnpm i canvaskit-wasm
    import { OGImageRoute } from 'astro-og-canvas';
 
    export const { getStaticPaths, GET } = await OGImageRoute({
-     // Tell us the name of your dynamic route segment.
-     // In this case it’s `route`, because the file is named `[...route].ts`.
-     param: 'route',
-
      // A collection of pages to generate images for.
      // The keys of this object are used to generate the path for that image.
      // In this example, we generate one image at `/open-graph/example.png`.
@@ -79,10 +68,6 @@ const collectionEntries = await getCollection('my-collection');
 const pages = Object.fromEntries(collectionEntries.map(({ slug, data }) => [slug, data]));
 
 export const { getStaticPaths, GET } = await OGImageRoute({
-  // Tell us the name of your dynamic route segment.
-  // In this case it’s `route`, because the file is named `[...route].ts`.
-  param: 'route',
-
   pages: pages,
 
   getImageOptions: (path, page) => ({
@@ -102,10 +87,6 @@ In the following example, every Markdown file in the project’s `src/pages/` di
 import { OGImageRoute } from 'astro-og-canvas';
 
 export const { getStaticPaths, GET } = await OGImageRoute({
-  // Tell us the name of your dynamic route segment.
-  // In this case it’s `route`, because the file is named `[...route].ts`.
-  param: 'route',
-
   // Pass the glob result to pages
   pages: await import.meta.glob('/src/pages/**/*.md', { eager: true }),
 
