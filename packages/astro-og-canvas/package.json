@@ -32,7 +32,7 @@
   "devDependencies": {
     "@types/node": "^18.19.130",
     "astro": "^7.1.6",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   },
   "dependencies": {
     "canvaskit-wasm": "^0.41.1",
