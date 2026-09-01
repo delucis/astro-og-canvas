@@ -33,14 +33,14 @@ importers:
         specifier: workspace:*
         version: link:../packages/astro-og-canvas
       canvaskit-wasm:
-        specifier: ^0.41.1
-        version: 0.41.1
+        specifier: ^0.42.0
+        version: 0.42.0
 
   packages/astro-og-canvas:
     dependencies:
       canvaskit-wasm:
-        specifier: ^0.41.1
-        version: 0.41.1
+        specifier: ^0.42.0
+        version: 0.42.0
       deterministic-object-hash:
         specifier: ^2.0.2
         version: 2.0.2
@@ -958,8 +958,8 @@ packages:
     resolution: {integrity: sha512-tixWYgm5ZoOD+3g6UTea91eow5z6AAHaho3g0V9CNSNb45gM8SmflpAc+GRd1InC4AqN/07Unrgp56Y94N9hJQ==}
     engines: {node: '>=20.19.0'}
 
-  canvaskit-wasm@0.41.1:
-    resolution: {integrity: sha512-gO2rNMIE0lOQ8MaarM4qNeq2zZAEknAObKP2XAKidMSAY8P5sURGdFkrx1TSdHuBFqTf5w35JqjuUzjibqkD5g==}
+  canvaskit-wasm@0.42.0:
+    resolution: {integrity: sha512-N3ikotmzYwDVAcpQKDMptBT2P5pIEWS9ywdmrQA2awwaMF9cxKEFuxZZHv9ay1Em9kDjxDsPtwUzDm1uNj136g==}
 
   ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
@@ -2801,7 +2801,7 @@ snapshots:
 
   cac@7.0.0: {}
 
-  canvaskit-wasm@0.41.1:
+  canvaskit-wasm@0.42.0:
     dependencies:
       '@webgpu/types': 0.1.21
 
