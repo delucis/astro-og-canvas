@@ -14,7 +14,7 @@
     "@astrojs/check": "^0.9.10",
     "@changesets/changelog-github": "^1.0.0",
     "@changesets/cli": "^3.0.1",
-    "astro": "^7.2.2",
+    "astro": "^7.2.9",
     "typescript": "^6.0.3"
   },
   "packageManager": "pnpm@11.21.0"
