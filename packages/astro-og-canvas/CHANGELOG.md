@@ -1,5 +1,11 @@
 # astro-og-canvas
 
+## 0.13.1
+
+### Patch Changes
+
+- [#216](https://github.com/delucis/astro-og-canvas/pull/216) [`ffc7676`](https://github.com/delucis/astro-og-canvas/commit/ffc7676cb206ddf51235620c4a1ff49215672b9f) Thanks [@renovate](https://github.com/apps/renovate)! - Updates internal dependency `canvaskit-wasm` to ^0.42.0
+
 ## 0.13.0
 
 ### Minor Changes
