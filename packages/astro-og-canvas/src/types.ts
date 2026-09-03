@@ -6,6 +6,13 @@ export type LogicalSide = 'block-start' | 'inline-end' | 'block-end' | 'inline-s
 export type IllogicalSide = 'top' | 'right' | 'bottom' | 'left';
 export type LogicalPosition = 'start' | 'center' | 'end';
 
+export interface PaddingConfig {
+  top?: number;
+  right?: number;
+  bottom?: number;
+  left?: number;
+}
+
 export interface FontConfig {
   /** RGB text color. Default: `[255, 255, 255]` */
   color?: RGBColor;
@@ -106,8 +113,12 @@ export interface OGImageOptions {
     /** Side of the image to draw the border on. Inline start/end respects writing direction. */
     side?: LogicalSide;
   };
-  /** Amount of padding between the image edge and text. Default: `60`. */
-  padding?: number;
+  /**
+   * Amount of padding between the image edge and text. Default: `60`.
+   *
+   * Can be a single number for all sides, or an object to specify sides individually.
+   */
+  padding?: number | PaddingConfig;
   /** Font styles. */
   font?: {
     /** Font style for the page title. */
