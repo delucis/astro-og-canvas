@@ -133,4 +133,6 @@ export interface OGImageOptions {
   format?: Exclude<keyof CanvasKit['ImageFormat'], 'values'>;
   /** Image quality between `0` (very lossy) and `100` (least lossy). Not used by all formats. */
   quality?: number;
+  /** Layer Order */
+  layerOrder?: Array<'bgImage' | 'border' | 'logo'>;
 }
