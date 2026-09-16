@@ -30,7 +30,7 @@
     "images"
   ],
   "devDependencies": {
-    "@types/node": "^18.19.130",
+    "@types/node": "^22.20.2",
     "astro": "^7.3.2",
     "typescript": "^6.0.3"
   },
