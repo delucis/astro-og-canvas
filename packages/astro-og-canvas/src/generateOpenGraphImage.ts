@@ -15,6 +15,21 @@ import type {
 } from './types';
 
 const [width, height] = [1200, 630];
+const defaultPadding = 60;
+const resolvePadding = (
+  padding: OGImageOptions['padding'],
+  fallback = defaultPadding
+): Record<IllogicalSide, number> => {
+  if (typeof padding === 'number') {
+    return { top: padding, right: padding, bottom: padding, left: padding };
+  }
+  return {
+    top: padding?.top ?? fallback,
+    right: padding?.right ?? fallback,
+    bottom: padding?.bottom ?? fallback,
+    left: padding?.left ?? fallback,
+  };
+};
 const edges: Record<IllogicalSide, XYWH> = {
   top: [0, 0, width, 0],
   bottom: [0, height, width, height],
@@ -79,7 +94,7 @@ export async function generateOpenGraphImage({
   bgGradient = [[0, 0, 0]],
   bgImage,
   border: borderConfig = {},
-  padding = 60,
+  padding = defaultPadding,
   logo,
   font: fontConfig = {},
   fonts = ['https://api.fontsource.org/v1/fonts/noto-sans/latin-400-normal.ttf'],
@@ -90,6 +105,7 @@ export async function generateOpenGraphImage({
   const fontMgr = await fontManager.get(fonts);
   const loadedLogo = logo && (await loadImage(logo.path));
   const loadedBg = bgImage && (await loadImage(bgImage.path));
+  const paddingConfig = resolvePadding(padding);
 
   /** A deterministic hash based on inputs. */
   const hash = shorthash(
@@ -100,7 +116,7 @@ export async function generateOpenGraphImage({
       bgGradient,
       bgImage,
       borderConfig,
-      padding,
+      paddingConfig,
       logo,
       fontConfig,
       fonts,
@@ -125,11 +141,13 @@ export async function generateOpenGraphImage({
   };
 
   const isRtl = dir === 'rtl';
+  const paddingInline = Math.min(paddingConfig.left, paddingConfig.right);
+  const paddingBlock = paddingConfig.top;
   const margin: Record<LogicalSide, number> = {
-    'block-start': padding,
-    'block-end': padding,
-    'inline-start': padding,
-    'inline-end': padding,
+    'block-start': paddingConfig.top,
+    'block-end': paddingConfig.bottom,
+    'inline-start': isRtl ? paddingConfig.right : paddingConfig.left,
+    'inline-end': isRtl ? paddingConfig.left : paddingConfig.right,
   };
   margin[border.side] += border.width;
 
@@ -259,7 +277,7 @@ export async function generateOpenGraphImage({
 
     // Add small empty line betwen title & description.
     paragraphBuilder.pushStyle(
-      new CanvasKit.TextStyle({ fontSize: padding / 3, heightMultiplier: 1 })
+      new CanvasKit.TextStyle({ fontSize: paddingBlock / 3, heightMultiplier: 1 })
     );
     paragraphBuilder.addText('\n\n');
 
@@ -269,13 +287,13 @@ export async function generateOpenGraphImage({
 
     // Draw paragraph to canvas.
     const para = paragraphBuilder.build();
-    const paraWidth = width - margin['inline-start'] - margin['inline-end'] - padding;
+    const paraWidth = width - margin['inline-start'] - margin['inline-end'] - paddingInline;
     para.layout(paraWidth);
     const paraLeft = isRtl
       ? width - margin['inline-start'] - para.getMaxWidth()
       : margin['inline-start'];
-    const minTop = margin['block-start'] + logoHeight + (logoHeight ? padding : 0);
-    const maxTop = minTop + (logoHeight ? padding : 0);
+    const minTop = margin['block-start'] + logoHeight + (logoHeight ? paddingBlock : 0);
+    const maxTop = minTop + (logoHeight ? paddingBlock : 0);
     const naturalTop = height - margin['block-end'] - para.getHeight();
     const paraTop = Math.max(minTop, Math.min(maxTop, naturalTop));
     canvas.drawParagraph(para, paraLeft, paraTop);

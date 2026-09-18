@@ -199,8 +199,19 @@ export interface OGImageOptions {
     position?: LogicalPosition | [LogicalPosition, LogicalPosition];
   };
 
-  /** Amount of padding between the image edge and text. Default: `60`. */
-  padding?: number;
+  /**
+   * Amount of padding between the image edge and text. Default: `60`.
+   *
+   * Can be a single number for all sides, or an object to specify sides individually.
+   */
+  padding?:
+    | number
+    | {
+        top?: number;
+        right?: number;
+        bottom?: number;
+        left?: number;
+      };
 
   /** Font styles. */
   font?: {
