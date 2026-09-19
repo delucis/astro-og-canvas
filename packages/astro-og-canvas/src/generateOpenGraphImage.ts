@@ -135,14 +135,24 @@ export async function generateOpenGraphImage({
 
   const CanvasKit = await getCanvasKit();
 
-  const textStyle = (fontConfig: Required<FontConfig>) => ({
-    color: CanvasKit.Color(...fontConfig.color),
-    fontFamilies: fontConfig.families,
-    fontSize: fontConfig.size,
-    fontStyle: { weight: CanvasKit.FontWeight[fontConfig.weight] },
-    heightMultiplier: fontConfig.lineHeight,
-  });
-
+  const textStyle = (fontConfig) => {
+    const style = {
+      color: CanvasKit.Color(...fontConfig.color),
+      fontFamilies: fontConfig.families,
+      fontSize: fontConfig.size,
+      fontStyle: { weight: CanvasKit.FontWeight[fontConfig.weight] },
+      heightMultiplier: fontConfig.lineHeight,
+    };
+    // Support OpenType font features.
+    if (fontConfig.features && typeof fontConfig.features === 'object') {
+      style.fontFeatures = Object.entries(fontConfig.features).map(([name, value]) => ({
+        name,
+        value: typeof value === 'number' ? value : value ? 1 : 0,
+      }));
+    }
+    return style;
+  };
+  
   // Set up.
   const surface = CanvasKit.MakeSurface(width, height)!;
   const canvas = surface.getCanvas();
