@@ -21,6 +21,7 @@ This test loads a background image with various settings.
   <img alt="Example image" src="/background-test/logo-end.png">
   <img alt="Example image" src="/background-test/logo-center-end.png">
   <img alt="Example image" src="/background-test/logo-end-center.png">
+  <img alt="Example image" src="/background-test/layer-test.png">
 </div>
 
 - [Home](/)
