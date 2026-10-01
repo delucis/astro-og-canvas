@@ -15,7 +15,7 @@
     "@changesets/changelog-github": "^1.0.1",
     "@changesets/cli": "^3.0.3",
     "astro": "^7.3.2",
-    "prettier": "^3.9.6",
+    "prettier": "^3.9.9",
     "typescript": "^6.0.3"
   },
   "packageManager": "pnpm@11.27.0"
