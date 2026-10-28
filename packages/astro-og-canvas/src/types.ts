@@ -61,7 +61,8 @@ export interface OGImageOptions {
   bgGradient?: RGBColor[];
 
   /**
-   * Optional background image.
+   * Optional background image,
+   * e.g. `{ path: './src/background.png', fit: 'cover' }`.
    */
   bgImage?: {
     /** Path to the background image file, e.g. `'./src/background.png'`. */
