@@ -1,5 +1,0 @@
----
-"astro-og-canvas": patch
----
-
-Updates dependency `entities` to v9
