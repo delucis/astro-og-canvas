@@ -61,6 +61,16 @@ export const { getStaticPaths, GET } = await OGImageRoute({
       title: 'bgImage: {\n  position: ["end", "center"],\n}',
       font: { title: { color: [0, 0, 0], weight: 'Bold' } },
     },
+    'layer-test.md': {
+      bgImage: { path: bgPath, fit: 'fill' },
+      title: 'bgImage: { fit: "fill" }',
+      border: {
+        color: [255, 0, 0],
+        width: 10,
+        side: 'inline-start',
+      },
+      layerOrder: ['bgImage', 'border', 'logo'],
+    },
   } satisfies Record<string, Partial<OGImageOptions>>,
   getImageOptions: (_path, { title, ...page }) => ({
     title: title || '',
@@ -72,6 +82,7 @@ export const { getStaticPaths, GET } = await OGImageRoute({
       [0, 0, 255],
     ],
     font: { title: { color: [0, 255, 0], weight: 'Bold' } },
+    cacheDir: false,
     ...page,
   }),
 });
