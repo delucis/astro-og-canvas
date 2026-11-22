@@ -87,7 +87,8 @@ class FontManager {
         if (/^https?:\/\//.test(url)) {
           const response = await fetch(url);
           if (response.ok) {
-            this.#cache.set(url, await response.arrayBuffer());
+            // Store as a `Buffer` (like local fonts) so `getHash()` hashes the font data.
+            this.#cache.set(url, Buffer.from(await response.arrayBuffer()));
           } else {
             this.#cache.set(url, undefined);
             error(response.status, response.statusText, '—', url);

@@ -1,7 +1,10 @@
 import assert from 'node:assert';
 import { readFileSync } from 'node:fs';
+import { createServer } from 'node:http';
+import type { AddressInfo } from 'node:net';
 import { describe, test } from 'node:test';
 import { type OGImageOptions, OGImageRoute } from '../packages/astro-og-canvas/dist/index.js';
+import { fontManager } from '../packages/astro-og-canvas/dist/assetLoaders.js';
 
 function loadRoute(path: string): string {
   const rel = `../demo/dist/${path}/index.html`.replaceAll(/\/{2,}/g, '/');
@@ -72,5 +75,27 @@ describe('OGImageRoute', () => {
       async () => getStaticPaths({ routePattern: '/og/[slug]/[id]' } as any),
       /Multiple parameters found in route: `\/og\/\[slug\]\/\[id\]`/,
     );
+  });
+});
+
+describe('fontManager', () => {
+  test('it should hash the contents of remote fonts', async (t) => {
+    const fonts: Record<string, Buffer> = {
+      '/a.ttf': readFileSync(
+        new URL(
+          '../demo/src/pages/local-font-test/_fonts/ibm-plex-mono-latin-400-normal.ttf',
+          import.meta.url,
+        ),
+      ),
+      '/b.ttf': Buffer.from('not the same font data'),
+    };
+    const server = createServer((req, res) => res.end(fonts[req.url!]));
+    await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', resolve));
+    t.after(() => server.close());
+    const { port } = server.address() as AddressInfo;
+    const [urlA, urlB] = ['/a.ttf', '/b.ttf'].map((path) => `http://127.0.0.1:${port}${path}`);
+
+    await fontManager.get([urlA, urlB]);
+    assert.notEqual(fontManager.getHash(urlA), fontManager.getHash(urlB));
   });
 });
