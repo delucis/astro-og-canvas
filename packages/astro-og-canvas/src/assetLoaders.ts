@@ -36,6 +36,15 @@ function formatCanvasKitInitError(e: unknown) {
   return e;
 }
 
+/**
+ * Get a short hash for binary data.
+ * `latin1` maps each byte to one character, so unlike UTF-8 decoding no information is lost.
+ */
+function hashData(data: Buffer | ArrayBuffer): string {
+  const buffer = Buffer.isBuffer(data) ? data : Buffer.from(data);
+  return shorthash(buffer.toString('latin1'));
+}
+
 class FontManager {
   /** Font data cache to avoid repeat downloads. */
   readonly #cache = new Map<string, Buffer | ArrayBuffer | undefined>();
@@ -106,7 +115,7 @@ class FontManager {
     let hash = this.#hashCache.get(url) || '';
     if (hash) return hash;
     const buffer = this.#cache.get(url);
-    hash = buffer ? shorthash(buffer.toString()) : '';
+    hash = buffer ? hashData(buffer) : '';
     this.#hashCache.set(url, hash);
     return hash;
   }
@@ -135,7 +144,7 @@ export const loadImage = async (path: string): Promise<LoadedImage> =>
     } else {
       // TODO: Figure out if there’s deno-compatible way to load images.
       const buffer = await fs.readFile(path);
-      const image = { buffer, hash: shorthash(buffer.toString()) };
+      const image = { buffer, hash: hashData(buffer) };
       images.cache.set(path, image);
       return image;
     }
